@@ -12,6 +12,22 @@ import {
     GET_GAME_HANDS_REQUEST,
     GET_GAME_HANDS_SUCCESS,
     GET_GAME_HANDS_ERROR,
+    STORE_PARTNER_BET,
+    STORE_ENNEMY_BET,
+    STORE_PLAYER_BET,
+    GET_AI_BET_REQUEST,
+    GET_AI_BET_ERROR,
+    GET_AI_BET_SUCCESS,
+    PLAY_CARD,
+    CAN_PLAY_ERROR,
+    CAN_PLAY_REQUEST,
+    CAN_PLAY_SUCCESS,
+    GET_AI_MOVE_ERROR,
+    GET_AI_MOVE_SUCCESS,
+    GET_AI_MOVE_REQUEST,
+    GET_CURRENT_FOLD_RESULT_SUCCESS,
+    GET_CURRENT_FOLD_RESULT_REQUEST,
+    GET_CURRENT_FOLD_RESULT_ERROR,
 } from '../constants/constants'
 
 import {
@@ -19,6 +35,10 @@ import {
     getListCards,
     getRules,
     getGameHands,
+    getAiBet,
+    canPlay,
+    getAiNormalMove,
+    evaluateFold,
 } from '../utils/apiCalls'
 
 export function getPointsRequest(){
@@ -141,13 +161,14 @@ export function getGameHandsRequest(){
     }
 }
 
-export function getGameHandsSuccess(data){
+export function getGameHandsSuccess(data,bool){
     return {
         type: GET_GAME_HANDS_SUCCESS,
         East_cards: data['East'],
         North_cards: data['North'],
         West_cards: data['West'],
         South_cards: data['South'],
+        first_tour: bool,
     }
 }
 
@@ -162,10 +183,184 @@ export function getGameHandsCoinche(bool,list){
     return (dispatch) => {
         dispatch(getGameHandsRequest())
         getGameHands(bool,list,(data) =>{
-            dispatch(getGameHandsSuccess(data))
+            dispatch(getGameHandsSuccess(data,bool))
         },
         (error) => {
             dispatch(getGameHandsError(error))
+        })
+    }
+}
+
+
+//Store des annonces
+export function storePlayerBet(data){
+  return{
+    type: STORE_PLAYER_BET,
+    player_bet: data,
+  }
+}
+export function storeEnnemyBet(data,n){
+  return{
+    type: STORE_ENNEMY_BET,
+    ennemy_bet: data,
+    ennemy:n
+  }
+}
+export function storePartnerBet(data){
+  return{
+    type: STORE_PARTNER_BET,
+    partner_bet: data,
+  }
+}
+
+//Get une annonce de l'ai
+export function getAiBetRequest(){
+    return {
+        type: GET_AI_BET_REQUEST,
+    }
+}
+
+export function getAiBetSuccess(data){
+    return {
+        type: GET_AI_BET_SUCCESS,
+        bet:data
+    }
+}
+
+export function getAiBetError(error){
+    return {
+        type: GET_AI_BET_ERROR,
+        error,
+    }
+}
+
+export function getAiBetCoinche(player_hand,partner_bet,ennemy_bet){
+    return (dispatch) => {
+        dispatch(getAiBetRequest())
+        getAiBet(player_hand,partner_bet,ennemy_bet,(data) =>{
+            dispatch(getAiBetSuccess(data))
+        },
+        (error) => {
+            dispatch(getAiBetError(error))
+        })
+    }
+}
+
+
+//Playing a card
+export function playCard(card,p,nextp,opening_color,atout){
+  return{
+    type: PLAY_CARD,
+    pileCard: card,
+    last_player: p,
+    next_player: nextp,
+    openi: opening_color,
+    atout: atout,
+  }
+}
+
+// retourne la liste de cartes que le joueur peut jouer
+export function canPlayRequest(){
+    return {
+        type: CAN_PLAY_REQUEST,
+    }
+}
+
+export function canPlaySuccess(data){
+    return {
+        type: CAN_PLAY_SUCCESS,
+        list_card_playable:data
+    }
+}
+
+export function canPlayError(error){
+    return {
+        type: CAN_PLAY_ERROR,
+        error,
+    }
+}
+
+export function canPlayCoinche(cards_played,atout,opening_color,remaining_cards){
+    return (dispatch) => {
+        dispatch(canPlayRequest())
+        canPlay(cards_played,atout,opening_color,remaining_cards,(data) =>{
+            dispatch(canPlaySuccess(data))
+        },
+        (error) => {
+            dispatch(canPlayError(error))
+        })
+    }
+}
+
+
+//Fais jouer une carte à un AI
+export function getAiMoveRequest(p1,nextp){
+    console.log(p1+" : 2")
+    return {
+        type: GET_AI_MOVE_REQUEST,
+        last_player: p1,
+        next_player: nextp,
+    }
+}
+
+export function getAiMoveSuccess(data,opening_color,atout,next){
+    return {
+        type: GET_AI_MOVE_SUCCESS,
+        pileCard: data[0],
+        openi: opening_color,
+        atout: atout,
+        next: next,
+    }
+}
+
+export function getAiMoveError(error){
+    return {
+        type: GET_AI_MOVE_ERROR,
+        error,
+    }
+}
+
+export function getAiMoveCoinche(cards_played,atout,opening_color,remaining_cards,p1,nextp){
+    return (dispatch) => {
+        dispatch(getAiMoveRequest(p1,nextp))
+        getAiNormalMove(cards_played,atout,opening_color,remaining_cards,(data) =>{
+            dispatch(getAiMoveSuccess(data,opening_color,atout,nextp))
+        },
+        (error) => {
+            dispatch(getAiMoveError(error))
+        })
+    }
+}
+
+// Evalue un pli
+export function getCurrentFoldResultRequest(){
+    return {
+        type: GET_CURRENT_FOLD_RESULT_REQUEST,
+    }
+}
+
+export function getCurrentFoldResultSuccess(data){
+    return {
+        type: GET_CURRENT_FOLD_RESULT_SUCCESS,
+        winner: data['played_by']
+    }
+}
+
+export function getCurrentFoldResulError(error){
+    return {
+        type: GET_CURRENT_FOLD_RESULT_ERROR,
+        error,
+    }
+}
+
+export function getCurrentFoldResult(atout,cards_in_fold){
+    return (dispatch) => {
+        dispatch(getCurrentFoldResultRequest())
+        evaluateFold(atout,cards_in_fold,(data) =>{
+            dispatch(getCurrentFoldResultSuccess(data))
+        },
+        (error) => {
+            dispatch(getCurrentFoldResulError(error))
         })
     }
 }

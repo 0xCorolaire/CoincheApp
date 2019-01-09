@@ -54,12 +54,29 @@
   text-align: center;
 }
 
+
+
 img[class^=cards]{
   display: inline-block;
   vertical-align: middle;
   margin: 1px;
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 
-img[class^=player]{
-  bottom: 0;
+.text{
+  color:black;
+  text-align: center;
+}
+
+.test{
+  width: 80px;
+  height: 130px;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 1px;
 }
