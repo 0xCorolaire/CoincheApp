@@ -80,3 +80,26 @@ img[class^=cards]{
   vertical-align: middle;
   margin: 1px;
 }
+
+#playerView {
+   bottom:0;
+   width:100%;
+   height:30px;   /* Height of the footer */
+}
+
+.canvasView {
+  background-color: red;
+  overflow: hidden;
+  display:block;
+  min-height: 75vh;
+  max-height: 75vh;
+}
+
+.fold {
+  position: relative;
+}
+
+.backg {
+  z-index: 3;
+  position:relative;
+}

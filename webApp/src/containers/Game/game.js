@@ -89,6 +89,7 @@ class Game extends Component {
     const {South_cards,East_cards,West_cards,North_cards,last_bettor, partner_bet,ennemy_bet,player_bet, next_bettor, last_bet, gameStatus, setGameStatus} = this.props
     const {playCard, first_tour, dealer, opening_color} = this.props
     let best_bettor
+    let showCurrentFold = [];
     let best_bet
     if(Math.max(partner_bet['value_bet'],ennemy_bet['value_bet'],player_bet['value_bet'])==partner_bet['value_bet'] && partner_bet['value_bet']!="0"){
       best_bettor="partner"
@@ -162,8 +163,9 @@ class Game extends Component {
       //Le jeu a commencé
       const {last_player, next_player,canPlayCoinche,getAiMoveCoinche, current_fold, cards_played, getCurrentFoldResult, pileCard} = this.props;
       next_bet = (<div>Atout : {best_bet['type_bet']} | Contrat : {best_bet['value_bet']}</div>)
+
       // atout : best_bet['type_bet'], last_player, next_player
-      if(pileCard.length<32){
+      if(pileCard.length<32  || current_fold.length!==0){
         //dealer : ennemy2 et next_player = player
         if(current_fold.length<4){
           if(next_player=="player"){
@@ -206,6 +208,16 @@ class Game extends Component {
             player_cards.push(<Box className="test"><img class="cards" style={{flex:1}} src={require("../../images/deck/"+pcard+".jpg")} height="130" width="80"/></Box>)
           }
         }
+
+        //Afficher la liste du pli en cours
+
+        for(i=0; i<cards_played.length; i++){
+          let pcard = cards_played[i]['card_name'].toUpperCase().toString()
+          showCurrentFold.push(<img class="cards fold" style={{flex:1}} src={require("../../images/deck/"+pcard+".jpg")} height="150" width="95"/>)
+        }
+
+
+
       }else{
         //Ici on a fini une partie
         //On affiche les resultats
@@ -298,21 +310,27 @@ class Game extends Component {
         />)
 
     return(
-      <div class="container">
-        <div class="row-3">
-          <div class="icons">{part_cards}</div>
+      <div>
+        <div class="row-9 canvasView">
+          {annonce}
+          <div class="row-3">
+            <div class="icons">{part_cards}</div>
+          </div>
+          <div class="row-6">
+            <div class="backg">
+              <div class="col-6 col-left box">{opp_cards}</div>
+              <div class="col-6 box-r">{opp2_cards}</div>
+              <div class="icons">{showCurrentFold}</div>
+
+            </div>
+          </div>
+          {info}
         </div>
-        <div class="row-6">
-          <div class="col-6 col-left box">{opp_cards}</div>
-          <div class="col-6 box-r">{opp2_cards}</div>
-        </div>
-        <div class="row-3">
+        <div class="row-3" id="playerView">
           <div class="icons">{player_cards}</div>
           {next_bet}
           {adv_game}
         </div>
-        {info}
-        {annonce}
       </div>
     )
   }
