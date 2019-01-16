@@ -21,6 +21,7 @@ const initialStore= {
         South_cards: [],
         distributed: "no",
         ennemy_bet: {"type_bet":null,"value_bet":"0"},
+        ennemy_bet2: {"type_bet":null,"value_bet":"0"},
         partner_bet: {"type_bet":null,"value_bet":"0"},
         player_bet: {"type_bet":null,"value_bet":"0"},
         last_bet: {"type_bet":null,"value_bet":"0"},
@@ -42,7 +43,9 @@ const initialStore= {
         current_points: {
           "player":0,
           "ennemy":0,
-        }
+        },
+        gameWinner: "null",
+        sended: "null",
     }
 }
 

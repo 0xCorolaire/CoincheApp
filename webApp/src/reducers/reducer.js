@@ -16,6 +16,7 @@ import {
     STORE_PLAYER_BET,
     STORE_ENNEMY_BET,
     STORE_PARTNER_BET,
+    STORE_ENNEMYB_BET,
     GET_AI_BET_ERROR,
     GET_AI_BET_REQUEST,
     GET_AI_BET_SUCCESS,
@@ -26,6 +27,10 @@ import {
     GET_CURRENT_FOLD_RESULT_SUCCESS,
     GET_CURRENT_FOLD_RESULT_REQUEST,
     GET_CURRENT_FOLD_RESULT_ERROR,
+    SET_WINNER,
+    SEND_GAME_RESULT_REQUEST,
+    SEND_GAME_RESULT_ERROR,
+    SEND_GAME_RESULT_SUCCESS,
 } from '../constants/constants'
 
 function Detector(state = {}, action){
@@ -34,7 +39,6 @@ function Detector(state = {}, action){
             return state
 
         case GET_POINTS_SUCCESS:
-            console.log("reducer : GET_POINTS_SUCCESS")
             state = Object.assign({}, state,{
                 nbPoints: action.nbPoints, //ici c'est les data de action donc le même nom
                 resImage: action.resImage,
@@ -42,7 +46,6 @@ function Detector(state = {}, action){
             return state
 
         case GET_POINTS_ERROR:
-            console.error('Erreur reducer')
             return state
 
         default:
@@ -156,6 +159,12 @@ function Coinche(state = {}, action){
               last_bettor: action.ennemy
           })
           return state
+        case STORE_ENNEMYB_BET:
+          state = Object.assign({}, state,{
+              ennemy_bet2: action.ennemy_bet,
+              last_bettor: action.ennemy
+          })
+          return state
         case STORE_PARTNER_BET:
           state = Object.assign({}, state,{
               partner_bet: action.partner_bet,
@@ -185,7 +194,7 @@ function Coinche(state = {}, action){
             })
           }else if(lb=="partner"){
             state = Object.assign({}, state,{
-                ennemy_bet: action.bet,
+                ennemy_bet2: action.bet,
                 last_bet: action.bet,
                 last_bettor: "ennemy2",
                 next_bettor: "player",
@@ -372,31 +381,61 @@ function Coinche(state = {}, action){
           const total = state.sum_current
           let curr_tot
           let next
-          //on attribue a quelqun ce prix
-          if(action.winner==="South"){
-            curr_tot = {
-              "player":total,
-              "ennemy":0,
+          const isLastFold = state.pileCard
+          if (isLastFold.length>30){
+            //on attribue a quelqun ce prix
+            if(action.winner==="South"){
+              curr_tot = {
+                "player":total+10,
+                "ennemy":0,
+              }
+              next="player"
+            }else if(action.winner==="North"){
+              curr_tot = {
+                "player":total+10,
+                "ennemy":0,
+              }
+              next="partner"
+            }else if(action.winner==="East"){
+              curr_tot = {
+                "player":0,
+                "ennemy":total+10,
+              }
+              next="ennemy2"
+            }else if(action.winner==="West"){
+              curr_tot = {
+                "player":0,
+                "ennemy":total+10,
+              }
+              next="ennemy1"
             }
-            next="player"
-          }else if(action.winner==="North"){
-            curr_tot = {
-              "player":total,
-              "ennemy":0,
+          }else{
+            //on attribue a quelqun ce prix
+            if(action.winner==="South"){
+              curr_tot = {
+                "player":total,
+                "ennemy":0,
+              }
+              next="player"
+            }else if(action.winner==="North"){
+              curr_tot = {
+                "player":total,
+                "ennemy":0,
+              }
+              next="partner"
+            }else if(action.winner==="East"){
+              curr_tot = {
+                "player":0,
+                "ennemy":total,
+              }
+              next="ennemy2"
+            }else if(action.winner==="West"){
+              curr_tot = {
+                "player":0,
+                "ennemy":total,
+              }
+              next="ennemy1"
             }
-            next="partner"
-          }else if(action.winner==="East"){
-            curr_tot = {
-              "player":0,
-              "ennemy":total,
-            }
-            next="ennemy2"
-          }else if(action.winner==="West"){
-            curr_tot = {
-              "player":0,
-              "ennemy":total,
-            }
-            next="ennemy1"
           }
           //Ajouter a la somme
           const score = {
@@ -413,6 +452,20 @@ function Coinche(state = {}, action){
             opening_color: "none",
             sum_current: 0,
           };
+        case SET_WINNER:
+          state = Object.assign({}, state,{
+              winner: action.winner,
+          })
+          return state
+        case SEND_GAME_RESULT_REQUEST:
+          return state;
+        case SEND_GAME_RESULT_ERROR:
+          return state;
+        case SEND_GAME_RESULT_SUCCESS:
+          state = Object.assign({}, state,{
+              sended: action.success,
+          })
+          return state
         default:
           return state
     }

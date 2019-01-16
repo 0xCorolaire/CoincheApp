@@ -15,6 +15,7 @@ import {
     STORE_PARTNER_BET,
     STORE_ENNEMY_BET,
     STORE_PLAYER_BET,
+    STORE_ENNEMYB_BET,
     GET_AI_BET_REQUEST,
     GET_AI_BET_ERROR,
     GET_AI_BET_SUCCESS,
@@ -28,6 +29,10 @@ import {
     GET_CURRENT_FOLD_RESULT_SUCCESS,
     GET_CURRENT_FOLD_RESULT_REQUEST,
     GET_CURRENT_FOLD_RESULT_ERROR,
+    SET_WINNER,
+    SEND_GAME_RESULT_REQUEST,
+    SEND_GAME_RESULT_SUCCESS,
+    SEND_GAME_RESULT_ERROR,
 } from '../constants/constants'
 
 import {
@@ -39,17 +44,16 @@ import {
     canPlay,
     getAiNormalMove,
     evaluateFold,
+    sendResult,
 } from '../utils/apiCalls'
 
 export function getPointsRequest(){
-    console.log("action getPoints request")
     return {
         type: GET_POINTS_REQUEST,
     }
 }
 
 export function getPointsSuccess(data){
-    console.log("action getPoinsSuccess")
     return {
         type: GET_POINTS_SUCCESS,
         nbPoints: data.userId,  //ici mettre les data reçues par l'api
@@ -58,7 +62,6 @@ export function getPointsSuccess(data){
 }
 
 export function getPointsError(error){
-    console.log("action getPointsError")
     return {
         type: GET_POINTS_ERROR,
         error,
@@ -66,7 +69,6 @@ export function getPointsError(error){
 }
 
 export function getPoints(image){
-    console.log("action getPoints")
     return (dispatch) => {
         dispatch(getPointsRequest())
         getPointsFromCards((data) =>{
@@ -199,6 +201,14 @@ export function storePlayerBet(data){
     player_bet: data,
   }
 }
+export function storeEnnemyBBet(data,n){
+  return{
+    type: STORE_ENNEMYB_BET,
+    ennemyb_bet: data,
+    ennemyb:n
+  }
+}
+
 export function storeEnnemyBet(data,n){
   return{
     type: STORE_ENNEMY_BET,
@@ -295,7 +305,6 @@ export function canPlayCoinche(cards_played,atout,opening_color,remaining_cards)
 
 //Fais jouer une carte à un AI
 export function getAiMoveRequest(p1,nextp){
-    console.log(p1+" : 2")
     return {
         type: GET_AI_MOVE_REQUEST,
         last_player: p1,
@@ -362,5 +371,32 @@ export function getCurrentFoldResult(atout,cards_in_fold){
         (error) => {
             dispatch(getCurrentFoldResulError(error))
         })
+    }
+}
+
+export function setWinner(w){
+  return {
+    type:SET_WINNER,
+    winner: w,
+  }
+}
+//Envoyer le resultat d'une game
+export function sendGameResultRequest(){
+    return {
+        type: SEND_GAME_RESULT_REQUEST,
+    }
+}
+
+export function sendGameResultSuccess(data){
+    return {
+        type: SEND_GAME_RESULT_SUCCESS,
+        success: data
+    }
+}
+
+export function sendGameResultError(error){
+    return {
+        type: SEND_GAME_RESULT_ERROR,
+        error,
     }
 }
