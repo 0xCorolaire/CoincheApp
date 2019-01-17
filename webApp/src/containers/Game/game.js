@@ -226,19 +226,14 @@ class Game extends Component {
         }
 
       }else{
-        //Ici on a fini une partie
-        //On check qui est le gagnant
-        console.log(game_points)
-        console.log(best_bettor)
-        console.log(best_bet)
-        const { setWinner } = this.props
-        //Ici on a fini une partie
-        console.log(game_points) // Le resultat
-        console.log(best_bettor) // Le preneur
-        console.log(best_bet) // L'annonce a respecter
+        const { setWinner, store_e_cards,store_n_cards,store_s_cards, store_w_cards } = this.props
+        const points_done = game_points['player']
+        const final_bettor = best_bettor
+        let has_won = "0";
         if(best_bettor=="player" || best_bettor=="partner"){
           if(best_bet['value_bet']<game_points['player']){
             setWinner("player");
+            has_won = "1"
           }else{
             setWinner("ennemy");
           }
@@ -247,8 +242,45 @@ class Game extends Component {
             setWinner("ennemy");
           }else{
             setWinner("player");
+            has_won="1"
           }
         }
+
+        const team_personnal = {
+          "player_south": "player",
+          "south_hand": store_s_cards,
+          "player_north": "partner",
+          "north_hand": store_n_cards,
+          "south_is_announcing_first": "1",
+          "north_is_announcing_first": "0"
+        }
+        const team_opponent = {
+          "player_west": "ennemy1",
+          "west_hand": store_w_cards,
+          "player_east": "ennemy2",
+          "east_hand": store_e_cards,
+          "west_is_announcing_first": "0",
+          "east_is_announcing_first": "0"
+        }
+        const list_bet= []
+/*
+          "list_bet" : [
+            {
+              "bettor" : "South",
+              "type_bet" : "D",
+              "value_bet" : "80",
+              "order_of_bet" : "1"
+            },
+            {
+              "bettor" : "North",
+              "type_bet" : "D",
+              "value_bet" : "90",
+              "order_of_bet" : "3"
+            }
+          ]
+        }*/
+
+
       }
 
 
@@ -392,6 +424,10 @@ let mapStateToProps = (state)=>{
     pileCard: state.Coinche.pileCard,
     game_points: state.Coinche.game_points,
     winner: state.Coinche.winner,
+    store_e_cards: state.Coinche.East_cards,
+    store_n_cards: state.Coinche.North_cards,
+    store_w_cards: state.Coinche.West_cards,
+    store_s_cards: state.Coinche.South_cards,
   };
 }
 

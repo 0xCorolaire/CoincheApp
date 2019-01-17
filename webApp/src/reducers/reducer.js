@@ -86,6 +86,10 @@ function Coinche(state = {}, action){
         case GET_GAME_HANDS_SUCCESS:
           if(action.first_tour=='True'){
             state = Object.assign({}, state,{
+                store_e_cards: action.East_cards,
+                store_n_cards: action.North_cards,
+                store_w_cards: action.West_cards,
+                store_s_cards: action.South_cards,
                 East_cards: action.East_cards,
                 North_cards: action.North_cards,
                 West_cards: action.West_cards,
@@ -98,6 +102,10 @@ function Coinche(state = {}, action){
             })
           }else if(state.dealer=="ennemy2"){
             state = Object.assign({}, state,{
+                store_e_cards: action.East_cards,
+                store_n_cards: action.North_cards,
+                store_w_cards: action.West_cards,
+                store_s_cards: action.South_cards,
                 East_cards: action.East_cards,
                 North_cards: action.North_cards,
                 West_cards: action.West_cards,
@@ -110,6 +118,10 @@ function Coinche(state = {}, action){
             })
           }else if(state.dealer=="player"){
             state = Object.assign({}, state,{
+                store_e_cards: action.East_cards,
+                store_n_cards: action.North_cards,
+                store_w_cards: action.West_cards,
+                store_s_cards: action.South_cards,
                 East_cards: action.East_cards,
                 North_cards: action.North_cards,
                 West_cards: action.West_cards,
@@ -122,6 +134,10 @@ function Coinche(state = {}, action){
             })
           }else if(state.dealer=="ennemy1"){
             state = Object.assign({}, state,{
+                store_e_cards: action.East_cards,
+                store_n_cards: action.North_cards,
+                store_w_cards: action.West_cards,
+                store_s_cards: action.South_cards,
                 East_cards: action.East_cards,
                 North_cards: action.North_cards,
                 West_cards: action.West_cards,
@@ -134,6 +150,10 @@ function Coinche(state = {}, action){
             })
           }else if(state.dealer=="partner"){
             state = Object.assign({}, state,{
+                store_e_cards: action.East_cards,
+                store_n_cards: action.North_cards,
+                store_w_cards: action.West_cards,
+                store_s_cards: action.South_cards,
                 East_cards: action.East_cards,
                 North_cards: action.North_cards,
                 West_cards: action.West_cards,
