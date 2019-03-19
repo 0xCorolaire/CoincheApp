@@ -15,15 +15,21 @@ const initialStore= {
         gameStatus:"null",
         first_tour: "null",
         dealer: "null",
+        store_w_cards: [],
+        store_e_cards: [],
+        store_n_cards: [],
+        store_s_cards: [],
         East_cards: [],
         West_cards: [],
         North_cards: [],
         South_cards: [],
         distributed: "no",
         ennemy_bet: {"type_bet":null,"value_bet":"0"},
+        ennemy_bet2: {"type_bet":null,"value_bet":"0"},
         partner_bet: {"type_bet":null,"value_bet":"0"},
         player_bet: {"type_bet":null,"value_bet":"0"},
         last_bet: {"type_bet":null,"value_bet":"0"},
+        list_bet: [],
         last_bettor: "none",
         next_bettor: "none",
         pileCard: [],
@@ -42,7 +48,9 @@ const initialStore= {
         current_points: {
           "player":0,
           "ennemy":0,
-        }
+        },
+        gameWinner: "null",
+        sended: "null",
     }
 }
 

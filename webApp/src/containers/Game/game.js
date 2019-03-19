@@ -16,8 +16,8 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Slide from '@material-ui/core/Slide';
 import { spacing } from '@material-ui/system';
 
-import { getRulesCoinche, setGameStatus, getGameHandsCoinche, storeEnnemyBet, storePlayerBet, storePartnerBet, getAiBetCoinche } from '../../actions/actions'
-import { playCard, canPlayCoinche, getAiMoveCoinche, getCurrentFoldResult } from '../../actions/actions'
+import { getRulesCoinche, setGameStatus, getGameHandsCoinche, storeEnnemyBet, storeEnnemyBBet, storePlayerBet, storePartnerBet, getAiBetCoinche } from '../../actions/actions'
+import { playCard, canPlayCoinche, getAiMoveCoinche, getCurrentFoldResult, setWinner, sendGameResult } from '../../actions/actions'
 
 function TransitionDown(props) {
   return <Slide {...props} direction="down" />;
@@ -63,7 +63,7 @@ class Game extends Component {
 
   getBets = () => {
     const { getAiBetCoinche } = this.props;
-    const {partner_bet,player_bet, ennemy_bet, last_bettor} = this.props;
+    const {partner_bet,player_bet, ennemy_bet, ennemy_bet2, last_bettor} = this.props;
     const {South_cards,East_cards,West_cards,North_cards} = this.props
     if(last_bettor=="player"){
       if(partner_bet['value_bet']>player_bet['value_bet']){
@@ -73,11 +73,11 @@ class Game extends Component {
       }
     }else if(last_bettor=="ennemy1"){
       getAiBetCoinche(North_cards,player_bet,ennemy_bet)
-    }else if(last_bettor=="partner"){
+    }else if(last_bettor==="partner"){
       if(partner_bet['value_bet']>player_bet['value_bet']){
-        getAiBetCoinche(East_cards,ennemy_bet,partner_bet)
+        getAiBetCoinche(East_cards,ennemy_bet2,partner_bet)
       }else{
-        getAiBetCoinche(East_cards,ennemy_bet,player_bet)
+        getAiBetCoinche(East_cards,ennemy_bet2,player_bet)
       }
     }else{
       this.setState({ open: true });
@@ -86,20 +86,23 @@ class Game extends Component {
 
   render(){
     const { open, show, value_bet, type_bet } = this.state;
-    const {South_cards,East_cards,West_cards,North_cards,last_bettor, partner_bet,ennemy_bet,player_bet, next_bettor, last_bet, gameStatus, setGameStatus} = this.props
-    const {playCard, first_tour, dealer, opening_color} = this.props
+    const {South_cards,East_cards,West_cards,North_cards,last_bettor, partner_bet,ennemy_bet, ennemy_bet2,player_bet, next_bettor, last_bet, gameStatus, setGameStatus} = this.props
+    const {playCard, first_tour, dealer, opening_color, getGameHandsCoinche, game_points} = this.props
     let best_bettor
     let showCurrentFold = [];
     let best_bet
-    if(Math.max(partner_bet['value_bet'],ennemy_bet['value_bet'],player_bet['value_bet'])==partner_bet['value_bet'] && partner_bet['value_bet']!="0"){
+    if(Math.max(partner_bet['value_bet'],ennemy_bet['value_bet'], ennemy_bet2['value_bet'],player_bet['value_bet'])==partner_bet['value_bet'] && partner_bet['value_bet']!="0"){
       best_bettor="partner"
       best_bet= partner_bet
-    }else if(Math.max(partner_bet['value_bet'],ennemy_bet['value_bet'],player_bet['value_bet'])==player_bet['value_bet'] && player_bet['value_bet']){
+    }else if(Math.max(partner_bet['value_bet'],ennemy_bet['value_bet'], ennemy_bet2['value_bet'], player_bet['value_bet'])==player_bet['value_bet'] && player_bet['value_bet']){
       best_bettor="player"
       best_bet=player_bet
-    }else if(Math.max(partner_bet['value_bet'],ennemy_bet['value_bet'],player_bet['value_bet'])==ennemy_bet['value_bet'] && ennemy_bet['value_bet']){
+    }else if(Math.max(partner_bet['value_bet'],ennemy_bet['value_bet'], ennemy_bet2['value_bet'], player_bet['value_bet'])==ennemy_bet['value_bet'] && ennemy_bet['value_bet']){
       best_bettor="ennemy1"
       best_bet=ennemy_bet
+    }else if(Math.max(partner_bet['value_bet'],ennemy_bet['value_bet'], ennemy_bet2['value_bet'], player_bet['value_bet'])==ennemy_bet2['value_bet'] && ennemy_bet2['value_bet']){
+      best_bettor="ennemy2"
+      best_bet=ennemy_bet2
     }
 
     let i;
@@ -121,6 +124,9 @@ class Game extends Component {
         boxShadow: '0px 5px 10px rgba(0,0,0,0.2)'
       }
     });
+    if(gameStatus==="redonne"){
+      window.location.reload()
+    }
     if(gameStatus=="started"){
       for(i=0; i<South_cards.length; i++){
         let pcard = South_cards[i]['card_name'].toUpperCase().toString()
@@ -140,10 +146,13 @@ class Game extends Component {
                         Next Bet
                       </Button>)
       }else{
-        setGameStatus("playingInfo")
         next_bet = (<div>Atout : {best_bet['type_bet']} | Contrat : {best_bet['value_bet']}</div>)
+        setGameStatus("playingInfo")
       }
     }else if(gameStatus=="playingInfo"){
+      if(best_bet['type_bet']==="Pass"){
+        setTimeout(function(){setGameStatus("redonne")}, 100)
+      }
       for(i=0; i<North_cards.length; i++){
         part_cards.push(<img class="cards" src={require("../../images/deck/Red_back_p.jpg")} height="85px" width="57px"/>)
       }
@@ -161,7 +170,7 @@ class Game extends Component {
         }
       }
       //Le jeu a commencé
-      const {last_player, next_player,canPlayCoinche,getAiMoveCoinche, current_fold, cards_played, getCurrentFoldResult, pileCard} = this.props;
+      const {game_points, last_player, next_player,canPlayCoinche,getAiMoveCoinche, current_fold, cards_played, getCurrentFoldResult, pileCard} = this.props;
       next_bet = (<div>Atout : {best_bet['type_bet']} | Contrat : {best_bet['value_bet']}</div>)
 
       // atout : best_bet['type_bet'], last_player, next_player
@@ -216,11 +225,55 @@ class Game extends Component {
           showCurrentFold.push(<img class="cards fold" style={{flex:1}} src={require("../../images/deck/"+pcard+".jpg")} height="150" width="95"/>)
         }
 
-
-
       }else{
-        //Ici on a fini une partie
-        //On affiche les resultats
+        const { setWinner, store_e_cards,store_n_cards,store_s_cards, store_w_cards, list_bet, sended, sendGameResult } = this.props
+        const points_done = game_points['player']
+        const final_bettor = best_bettor
+        let has_won = "0";
+        if(best_bettor=="player" || best_bettor=="partner"){
+          if(best_bet['value_bet']<game_points['player']){
+            setWinner("player");
+            has_won = "1"
+          }else{
+            setWinner("ennemy");
+          }
+        }else{
+          if(best_bet['value_bet']<game_points['ennemy']){
+            setWinner("ennemy");
+          }else{
+            setWinner("player");
+            has_won="1"
+          }
+        }
+        //parsing cards
+        let parsed_s_cards = "";
+        for(i=0; i<store_s_cards.length-1, i++){
+          parsed_s_cards += store_s_cards[i]['card_name']+"-"
+
+        }
+
+        const team_personnal = {
+          "player_south": "player",
+          "south_hand": store_s_cards,
+          "player_north": "partner",
+          "north_hand": store_n_cards,
+          "south_is_announcing_first": "1",
+          "north_is_announcing_first": "0"
+        }
+        const team_opponent = {
+          "player_west": "ennemy1",
+          "west_hand": store_w_cards,
+          "player_east": "ennemy2",
+          "east_hand": store_e_cards,
+          "west_is_announcing_first": "0",
+          "east_is_announcing_first": "0"
+        }
+        if(sended=="null"){
+          sendGameResult(has_won,points_done,final_bettor,team_personnal,team_opponent,list_bet)
+
+        }else{
+          console.log("YEAHH")
+        }
 
 
       }
@@ -353,6 +406,7 @@ let mapStateToProps = (state)=>{
     East_cards: state.Coinche.East_cards || [],
     last_bettor: state.Coinche.last_bettor || null,
     ennemy_bet: state.Coinche.ennemy_bet,
+    ennemy_bet2: state.Coinche.ennemy_bet2,
     partner_bet: state.Coinche.partner_bet,
     player_bet: state.Coinche.player_bet,
     next_bettor: state.Coinche.next_bettor || null,
@@ -363,6 +417,14 @@ let mapStateToProps = (state)=>{
     current_fold: state.Coinche.current_fold,
     cards_played: state.Coinche.cards_played,
     pileCard: state.Coinche.pileCard,
+    game_points: state.Coinche.game_points,
+    winner: state.Coinche.winner,
+    store_e_cards: state.Coinche.East_cards,
+    store_n_cards: state.Coinche.North_cards,
+    store_w_cards: state.Coinche.West_cards,
+    store_s_cards: state.Coinche.South_cards,
+    list_bet: state.Coinche.list_bet,
+    sended: state.Coinche.sended,
   };
 }
 
@@ -376,6 +438,9 @@ let mapDispatchToProps = (dispatch)=>{
     canPlayCoinche: (cards_played,atout,opening_color,remaining_cards) => dispatch(canPlayCoinche(cards_played,atout,opening_color,remaining_cards)),
     getAiMoveCoinche: (cards_played,atout,opening_color,remaining_cards,p1,p2) => dispatch(getAiMoveCoinche(cards_played,atout,opening_color,remaining_cards,p1,p2)),
     getCurrentFoldResult: (at,fold) => dispatch(getCurrentFoldResult(at,fold)),
+    getGameHandsCoinche: (bool,list) => dispatch(getGameHandsCoinche(bool,list)),
+    setWinner: (w) => dispatch(setWinner(w)),
+    sendGameResult: (h,p,f,t1,t2,l) => dispatch(sendGameResult(h,p,f,t1,t2,l)),
   }
 }
 

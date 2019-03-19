@@ -16,6 +16,7 @@ import {
     STORE_PLAYER_BET,
     STORE_ENNEMY_BET,
     STORE_PARTNER_BET,
+    STORE_ENNEMYB_BET,
     GET_AI_BET_ERROR,
     GET_AI_BET_REQUEST,
     GET_AI_BET_SUCCESS,
@@ -26,6 +27,10 @@ import {
     GET_CURRENT_FOLD_RESULT_SUCCESS,
     GET_CURRENT_FOLD_RESULT_REQUEST,
     GET_CURRENT_FOLD_RESULT_ERROR,
+    SET_WINNER,
+    SEND_GAME_RESULT_REQUEST,
+    SEND_GAME_RESULT_ERROR,
+    SEND_GAME_RESULT_SUCCESS,
 } from '../constants/constants'
 
 function Detector(state = {}, action){
@@ -34,7 +39,6 @@ function Detector(state = {}, action){
             return state
 
         case GET_POINTS_SUCCESS:
-            console.log("reducer : GET_POINTS_SUCCESS")
             state = Object.assign({}, state,{
                 nbPoints: action.nbPoints, //ici c'est les data de action donc le même nom
                 resImage: action.resImage,
@@ -42,7 +46,6 @@ function Detector(state = {}, action){
             return state
 
         case GET_POINTS_ERROR:
-            console.error('Erreur reducer')
             return state
 
         default:
@@ -83,6 +86,10 @@ function Coinche(state = {}, action){
         case GET_GAME_HANDS_SUCCESS:
           if(action.first_tour=='True'){
             state = Object.assign({}, state,{
+                store_e_cards: action.East_cards,
+                store_n_cards: action.North_cards,
+                store_w_cards: action.West_cards,
+                store_s_cards: action.South_cards,
                 East_cards: action.East_cards,
                 North_cards: action.North_cards,
                 West_cards: action.West_cards,
@@ -95,6 +102,10 @@ function Coinche(state = {}, action){
             })
           }else if(state.dealer=="ennemy2"){
             state = Object.assign({}, state,{
+                store_e_cards: action.East_cards,
+                store_n_cards: action.North_cards,
+                store_w_cards: action.West_cards,
+                store_s_cards: action.South_cards,
                 East_cards: action.East_cards,
                 North_cards: action.North_cards,
                 West_cards: action.West_cards,
@@ -107,6 +118,10 @@ function Coinche(state = {}, action){
             })
           }else if(state.dealer=="player"){
             state = Object.assign({}, state,{
+                store_e_cards: action.East_cards,
+                store_n_cards: action.North_cards,
+                store_w_cards: action.West_cards,
+                store_s_cards: action.South_cards,
                 East_cards: action.East_cards,
                 North_cards: action.North_cards,
                 West_cards: action.West_cards,
@@ -119,6 +134,10 @@ function Coinche(state = {}, action){
             })
           }else if(state.dealer=="ennemy1"){
             state = Object.assign({}, state,{
+                store_e_cards: action.East_cards,
+                store_n_cards: action.North_cards,
+                store_w_cards: action.West_cards,
+                store_s_cards: action.South_cards,
                 East_cards: action.East_cards,
                 North_cards: action.North_cards,
                 West_cards: action.West_cards,
@@ -131,6 +150,10 @@ function Coinche(state = {}, action){
             })
           }else if(state.dealer=="partner"){
             state = Object.assign({}, state,{
+                store_e_cards: action.East_cards,
+                store_n_cards: action.North_cards,
+                store_w_cards: action.West_cards,
+                store_s_cards: action.South_cards,
                 East_cards: action.East_cards,
                 North_cards: action.North_cards,
                 West_cards: action.West_cards,
@@ -144,15 +167,29 @@ function Coinche(state = {}, action){
           }
           return state
         case STORE_PLAYER_BET:
-          state = Object.assign({}, state,{
-              player_bet: action.player_bet,
-              last_bettor: "player",
-              next_bettor: "ennemy1"
-          })
-          return state
+          const order_bet = state.list_bet.length;
+          const add_bet = {
+            "bettor": "player",
+            "type_bet": action.player_bet['type_bet'],
+            "value_bet": action.player_bet['value_bet'],
+            "order_of_bet": order_bet+1
+          }
+          return {
+            ...state,
+            player_bet: action.player_bet,
+            last_bettor: "player",
+            next_bettor: "ennemy1",
+            list_bet: [...state.list_bet,add_bet]
+          };
         case STORE_ENNEMY_BET:
           state = Object.assign({}, state,{
               ennemy_bet: action.ennemy_bet,
+              last_bettor: action.ennemy
+          })
+          return state
+        case STORE_ENNEMYB_BET:
+          state = Object.assign({}, state,{
+              ennemy_bet2: action.ennemy_bet,
               last_bettor: action.ennemy
           })
           return state
@@ -169,36 +206,54 @@ function Coinche(state = {}, action){
           return state
         case GET_AI_BET_SUCCESS:
           let lb = state.last_bettor;
+          let order_betAI = state.list_bet.length;
+          let add_betAI;
           if(lb=="player"){
-            state = Object.assign({}, state,{
-                ennemy_bet: action.bet,
-                last_bet: action.bet,
-                last_bettor: "ennemy1",
-                next_bettor: "partner"
-            })
+            add_betAI = {
+              "bettor": "ennemy1",
+              "type_bet": action.bet['type_bet'],
+              "value_bet": action.bet['value_bet'],
+              "order_of_bet": order_betAI+1
+            }
+            return {
+              ...state,
+              ennemy_bet: action.bet,
+              last_bet: action.bet,
+              last_bettor: "ennemy1",
+              next_bettor: "partner",
+              list_bet: [...state.list_bet,add_betAI]
+            };
           }else if(lb=="ennemy1"){
-            state = Object.assign({}, state,{
-                partner_bet: action.bet,
-                last_bet: action.bet,
-                last_bettor: "partner",
-                next_bettor: "ennemy2",
-            })
+            add_betAI = {
+              "bettor": "partner",
+              "type_bet": action.bet['type_bet'],
+              "value_bet": action.bet['value_bet'],
+              "order_of_bet": order_betAI+1
+            }
+            return {
+              ...state,
+              ennemy_bet: action.bet,
+              last_bet: action.bet,
+              last_bettor: "partner",
+              next_bettor: "ennemy2",
+              list_bet: [...state.list_bet,add_betAI]
+            };
           }else if(lb=="partner"){
-            state = Object.assign({}, state,{
-                ennemy_bet: action.bet,
-                last_bet: action.bet,
-                last_bettor: "ennemy2",
-                next_bettor: "player",
-            })
-          }else if(lb=="ennemy2"){
-            state = Object.assign({}, state,{
-                player_bet: action.bet,
-                last_bet: action.bet,
-                last_bettor: "player",
-                next_bettor: "ennemy1",
-            })
+            add_betAI = {
+              "bettor": "ennemy2",
+              "type_bet": action.bet['type_bet'],
+              "value_bet": action.bet['value_bet'],
+              "order_of_bet": order_betAI+1
+            }
+            return {
+              ...state,
+              ennemy_bet: action.bet,
+              last_bet: action.bet,
+              last_bettor: "ennemy2",
+              next_bettor: "player",
+              list_bet: [...state.list_bet,add_betAI]
+            };
           }
-          return state
         case PLAY_CARD:
           const list_card = [...state.South_cards];
           const res = list_card.filter(item => item['card_name'] !== action.pileCard['card_name']);
@@ -372,31 +427,61 @@ function Coinche(state = {}, action){
           const total = state.sum_current
           let curr_tot
           let next
-          //on attribue a quelqun ce prix
-          if(action.winner==="South"){
-            curr_tot = {
-              "player":total,
-              "ennemy":0,
+          const isLastFold = state.pileCard
+          if (isLastFold.length>30){
+            //on attribue a quelqun ce prix
+            if(action.winner==="South"){
+              curr_tot = {
+                "player":total+10,
+                "ennemy":0,
+              }
+              next="player"
+            }else if(action.winner==="North"){
+              curr_tot = {
+                "player":total+10,
+                "ennemy":0,
+              }
+              next="partner"
+            }else if(action.winner==="East"){
+              curr_tot = {
+                "player":0,
+                "ennemy":total+10,
+              }
+              next="ennemy2"
+            }else if(action.winner==="West"){
+              curr_tot = {
+                "player":0,
+                "ennemy":total+10,
+              }
+              next="ennemy1"
             }
-            next="player"
-          }else if(action.winner==="North"){
-            curr_tot = {
-              "player":total,
-              "ennemy":0,
+          }else{
+            //on attribue a quelqun ce prix
+            if(action.winner==="South"){
+              curr_tot = {
+                "player":total,
+                "ennemy":0,
+              }
+              next="player"
+            }else if(action.winner==="North"){
+              curr_tot = {
+                "player":total,
+                "ennemy":0,
+              }
+              next="partner"
+            }else if(action.winner==="East"){
+              curr_tot = {
+                "player":0,
+                "ennemy":total,
+              }
+              next="ennemy2"
+            }else if(action.winner==="West"){
+              curr_tot = {
+                "player":0,
+                "ennemy":total,
+              }
+              next="ennemy1"
             }
-            next="partner"
-          }else if(action.winner==="East"){
-            curr_tot = {
-              "player":0,
-              "ennemy":total,
-            }
-            next="ennemy2"
-          }else if(action.winner==="West"){
-            curr_tot = {
-              "player":0,
-              "ennemy":total,
-            }
-            next="ennemy1"
           }
           //Ajouter a la somme
           const score = {
@@ -413,6 +498,20 @@ function Coinche(state = {}, action){
             opening_color: "none",
             sum_current: 0,
           };
+        case SET_WINNER:
+          state = Object.assign({}, state,{
+              winner: action.winner,
+          })
+          return state
+        case SEND_GAME_RESULT_REQUEST:
+          return state;
+        case SEND_GAME_RESULT_ERROR:
+          return state;
+        case SEND_GAME_RESULT_SUCCESS:
+          state = Object.assign({}, state,{
+              sended: action.success,
+          })
+          return state
         default:
           return state
     }
