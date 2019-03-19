@@ -1,25 +1,31 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-webApp/node_modules
-webApp/.pnp
+oldApp/node_modules
+oldApp/.pnp
 .pnp.js
 
+coincheut/node_modules
+
+
+webApp/node_modules
+
+
 # testing
-webApp/coverage
+oldApp/coverage
 
 # production
-webApp/build
+oldApp/build
 
 # misc
-webApp/.DS_Store
-webApp/.env.local
-webApp/.env.development.local
-webApp/.env.test.local
-webApp.env.production.local
+oldApp/.DS_Store
+oldApp/.env.local
+oldApp/.env.development.local
+oldApp/.env.test.local
+oldApp.env.production.local
 
 webAppnpm-debug.log*
 webAppyarn-debug.log*
 webAppyarn-error.log*
 
-webApp/src/utils/config.js
+oldApp/src/utils/config.js
