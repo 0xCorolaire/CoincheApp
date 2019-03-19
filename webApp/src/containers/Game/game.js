@@ -17,7 +17,7 @@ import Slide from '@material-ui/core/Slide';
 import { spacing } from '@material-ui/system';
 
 import { getRulesCoinche, setGameStatus, getGameHandsCoinche, storeEnnemyBet, storeEnnemyBBet, storePlayerBet, storePartnerBet, getAiBetCoinche } from '../../actions/actions'
-import { playCard, canPlayCoinche, getAiMoveCoinche, getCurrentFoldResult, setWinner } from '../../actions/actions'
+import { playCard, canPlayCoinche, getAiMoveCoinche, getCurrentFoldResult, setWinner, sendGameResult } from '../../actions/actions'
 
 function TransitionDown(props) {
   return <Slide {...props} direction="down" />;
@@ -226,7 +226,7 @@ class Game extends Component {
         }
 
       }else{
-        const { setWinner, store_e_cards,store_n_cards,store_s_cards, store_w_cards } = this.props
+        const { setWinner, store_e_cards,store_n_cards,store_s_cards, store_w_cards, list_bet, sended, sendGameResult } = this.props
         const points_done = game_points['player']
         const final_bettor = best_bettor
         let has_won = "0";
@@ -245,6 +245,12 @@ class Game extends Component {
             has_won="1"
           }
         }
+        //parsing cards
+        let parsed_s_cards = "";
+        for(i=0; i<store_s_cards.length-1, i++){
+          parsed_s_cards += store_s_cards[i]['card_name']+"-"
+
+        }
 
         const team_personnal = {
           "player_south": "player",
@@ -262,23 +268,12 @@ class Game extends Component {
           "west_is_announcing_first": "0",
           "east_is_announcing_first": "0"
         }
-        const list_bet= []
-/*
-          "list_bet" : [
-            {
-              "bettor" : "South",
-              "type_bet" : "D",
-              "value_bet" : "80",
-              "order_of_bet" : "1"
-            },
-            {
-              "bettor" : "North",
-              "type_bet" : "D",
-              "value_bet" : "90",
-              "order_of_bet" : "3"
-            }
-          ]
-        }*/
+        if(sended=="null"){
+          sendGameResult(has_won,points_done,final_bettor,team_personnal,team_opponent,list_bet)
+
+        }else{
+          console.log("YEAHH")
+        }
 
 
       }
@@ -428,6 +423,8 @@ let mapStateToProps = (state)=>{
     store_n_cards: state.Coinche.North_cards,
     store_w_cards: state.Coinche.West_cards,
     store_s_cards: state.Coinche.South_cards,
+    list_bet: state.Coinche.list_bet,
+    sended: state.Coinche.sended,
   };
 }
 
@@ -443,6 +440,7 @@ let mapDispatchToProps = (dispatch)=>{
     getCurrentFoldResult: (at,fold) => dispatch(getCurrentFoldResult(at,fold)),
     getGameHandsCoinche: (bool,list) => dispatch(getGameHandsCoinche(bool,list)),
     setWinner: (w) => dispatch(setWinner(w)),
+    sendGameResult: (h,p,f,t1,t2,l) => dispatch(sendGameResult(h,p,f,t1,t2,l)),
   }
 }
 

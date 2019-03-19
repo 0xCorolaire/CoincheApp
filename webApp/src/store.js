@@ -29,6 +29,7 @@ const initialStore= {
         partner_bet: {"type_bet":null,"value_bet":"0"},
         player_bet: {"type_bet":null,"value_bet":"0"},
         last_bet: {"type_bet":null,"value_bet":"0"},
+        list_bet: [],
         last_bettor: "none",
         next_bettor: "none",
         pileCard: [],

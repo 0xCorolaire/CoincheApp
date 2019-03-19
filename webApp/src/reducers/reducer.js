@@ -167,12 +167,20 @@ function Coinche(state = {}, action){
           }
           return state
         case STORE_PLAYER_BET:
-          state = Object.assign({}, state,{
-              player_bet: action.player_bet,
-              last_bettor: "player",
-              next_bettor: "ennemy1"
-          })
-          return state
+          const order_bet = state.list_bet.length;
+          const add_bet = {
+            "bettor": "player",
+            "type_bet": action.player_bet['type_bet'],
+            "value_bet": action.player_bet['value_bet'],
+            "order_of_bet": order_bet+1
+          }
+          return {
+            ...state,
+            player_bet: action.player_bet,
+            last_bettor: "player",
+            next_bettor: "ennemy1",
+            list_bet: [...state.list_bet,add_bet]
+          };
         case STORE_ENNEMY_BET:
           state = Object.assign({}, state,{
               ennemy_bet: action.ennemy_bet,
@@ -198,36 +206,54 @@ function Coinche(state = {}, action){
           return state
         case GET_AI_BET_SUCCESS:
           let lb = state.last_bettor;
+          let order_betAI = state.list_bet.length;
+          let add_betAI;
           if(lb=="player"){
-            state = Object.assign({}, state,{
-                ennemy_bet: action.bet,
-                last_bet: action.bet,
-                last_bettor: "ennemy1",
-                next_bettor: "partner"
-            })
+            add_betAI = {
+              "bettor": "ennemy1",
+              "type_bet": action.bet['type_bet'],
+              "value_bet": action.bet['value_bet'],
+              "order_of_bet": order_betAI+1
+            }
+            return {
+              ...state,
+              ennemy_bet: action.bet,
+              last_bet: action.bet,
+              last_bettor: "ennemy1",
+              next_bettor: "partner",
+              list_bet: [...state.list_bet,add_betAI]
+            };
           }else if(lb=="ennemy1"){
-            state = Object.assign({}, state,{
-                partner_bet: action.bet,
-                last_bet: action.bet,
-                last_bettor: "partner",
-                next_bettor: "ennemy2",
-            })
+            add_betAI = {
+              "bettor": "partner",
+              "type_bet": action.bet['type_bet'],
+              "value_bet": action.bet['value_bet'],
+              "order_of_bet": order_betAI+1
+            }
+            return {
+              ...state,
+              ennemy_bet: action.bet,
+              last_bet: action.bet,
+              last_bettor: "partner",
+              next_bettor: "ennemy2",
+              list_bet: [...state.list_bet,add_betAI]
+            };
           }else if(lb=="partner"){
-            state = Object.assign({}, state,{
-                ennemy_bet2: action.bet,
-                last_bet: action.bet,
-                last_bettor: "ennemy2",
-                next_bettor: "player",
-            })
-          }else if(lb=="ennemy2"){
-            state = Object.assign({}, state,{
-                player_bet: action.bet,
-                last_bet: action.bet,
-                last_bettor: "player",
-                next_bettor: "ennemy1",
-            })
+            add_betAI = {
+              "bettor": "ennemy2",
+              "type_bet": action.bet['type_bet'],
+              "value_bet": action.bet['value_bet'],
+              "order_of_bet": order_betAI+1
+            }
+            return {
+              ...state,
+              ennemy_bet: action.bet,
+              last_bet: action.bet,
+              last_bettor: "ennemy2",
+              next_bettor: "player",
+              list_bet: [...state.list_bet,add_betAI]
+            };
           }
-          return state
         case PLAY_CARD:
           const list_card = [...state.South_cards];
           const res = list_card.filter(item => item['card_name'] !== action.pileCard['card_name']);

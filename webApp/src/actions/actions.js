@@ -400,3 +400,15 @@ export function sendGameResultError(error){
         error,
     }
 }
+
+export function sendGameResult(has_won,points_done,final_bettor,team_personnal,team_opponent,list_bet){
+    return (dispatch) => {
+        dispatch(sendGameResultRequest())
+        sendResult(has_won,points_done,final_bettor,team_personnal,team_opponent,list_bet,(data) =>{
+            dispatch(sendGameResultSuccess(data))
+        },
+        (error) => {
+            dispatch(sendGameResultError(error))
+        })
+    }
+}
