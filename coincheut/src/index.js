@@ -10,13 +10,8 @@ import * as apiUtils from "./utils/apiUtils"
 import routing from "./utils/routing"
 
 
-let store
-
-
-
-
-
-store = createStore(rootReducer, {}, applyMiddleware(thunk, apiUtils.apiMiddleware))
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const store = createStore(rootReducer, {}, composeEnhancers(applyMiddleware(thunk, apiUtils.apiMiddleware)))
 
 const routeManager = routing.routeManager
 
