@@ -1,4 +1,5 @@
 import { combineReducers } from "redux"
+import * as apiUtils from "../utils/apiUtils"
 import * as c from "./gameConstants"
 
 const initialState = {
@@ -20,4 +21,5 @@ function GAMEPLAY(state = initialState, action) {
 
 export const mainReducer = combineReducers({
   GAMEPLAY,
+  [c.API_KEY_GAME_HANDS]: apiUtils.apiReducer(c.API_KEY_GAME_HANDS,{data:{}})
 })

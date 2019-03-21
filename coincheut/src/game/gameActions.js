@@ -13,3 +13,12 @@ export const setStatus = (s) => {
       dispatch(setStatusDisp(s))
   }
 }
+
+/* HANDS DISTRIBUTION */
+export const getGameHands = (newGame,listLastGameCards=[]) => {
+  let body={
+    firstGame: newGame,
+    listLastGameCards: listLastGameCards
+  }
+  return apiUtils.callJSONAPI(c.API_URL_GAME_HANDS, c.API_KEY_GAME_HANDS, "POST", body)
+}

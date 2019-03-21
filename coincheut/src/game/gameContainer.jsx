@@ -13,10 +13,14 @@ class GameComponent extends React.Component {
 
   componentDidMount(){
     this.props.setStatus("STARTED")
+    this.props.getGameHands("True")
   }
 
   render(){
-    console.log(this.props.game)
+    let apiStatus = this.props.handsdeal.status
+    if(apiStatus !== "SUCCESS"){
+      return (<div></div>)
+    }
 
     return (
       <div className="game fullHeight fullWidth">
@@ -31,7 +35,8 @@ class GameComponent extends React.Component {
 const mapStateToProps = (state) => {
   return {
     routing: state[routing.constants.NAME],
-    game: state[c.NAME]
+    game: state[c.NAME],
+    handsdeal: state[c.NAME][c.API_KEY_GAME_HANDS]
 
   }
 }
@@ -39,6 +44,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setStatus: (s) => dispatch(a.setStatus(s)),
+    getGameHands: (newGame,lastListCards) => dispatch(a.getGameHands(newGame,lastListCards)),
   }
 }
 
