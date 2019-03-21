@@ -5,9 +5,7 @@ import {connect} from "react-redux"
 import routing from "../utils/routing"
 import * as c from "./gameConstants"
 import * as a from "./gameActions"
-
-
-
+import ApiStatus from "../utils/apiStatus"
 
 class GameComponent extends React.Component {
 
@@ -17,14 +15,13 @@ class GameComponent extends React.Component {
   }
 
   render(){
-    let apiStatus = this.props.handsdeal.status
-    if(apiStatus !== "SUCCESS"){
-      return (<div></div>)
+    let status = this.props.handsdeal.status
+    if(status !== "SUCCESS"){
+      return (<ApiStatus />)
     }
 
     return (
       <div className="game fullHeight fullWidth">
-
         BRUH
       </div>
     )

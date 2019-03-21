@@ -15,6 +15,25 @@ html, body{
   font-family: "DDINCondensedBold";
 }
 
+.loader{
+  display: flex;
+  align-items: center;
+  overflow: auto;
+}
+
+.loader-container{
+  margin: auto;
+}
+
+
+.spinner-side {
+  stroke-dasharray: 1000 !important;
+  stroke-dashoffset: 1000 !important;
+  animation: dash 5s linear alternate infinite !important;
+}
+
+
+
 .coinche{
   display: grid;
   grid-template-columns: 80% auto;
