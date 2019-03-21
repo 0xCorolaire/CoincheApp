@@ -1,0 +1,173 @@
+@mixin homepageStyles() {
+  .interface{
+    background: $gray1;
+    .headerInterface{
+      height: 18%;
+      .headerEcriture{
+        margin: auto;
+        width: 40%;
+        height: 50%;
+        background: url($logoE) no-repeat;
+        background-position: center;
+      }
+      .headerIcone{
+        margin: auto;
+        width: 40%;
+        height: 50%;
+        display: block;
+        background: url($logoI) no-repeat;
+        background-position: center;
+      }
+    }
+    .playingInterface{
+      height: calc(82% - 20px);
+      .first-row-hexa{
+        margin-top: 20px;
+        display: flex;
+        height: 50%;
+        width: 100%;
+        .solo{
+          transition: all .5s;
+          margin-right: 20px;
+          margin-left: auto;
+          width: 20%;
+          height: 100%;
+          background: url($hexagone) no-repeat;
+          overflow: auto;
+          .label{
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 50px !important;
+            width: 40%;
+            height: 15%;
+            background: url($solo) no-repeat;
+          }
+          .description{
+            font-family: "DDINCondensed";
+            color: $gray3;
+            margin: 10px;
+            height: 35%;
+          }
+          .rules{
+            margin-left: auto;
+            margin-right: auto;
+            width: 30%;
+            height: 15%;
+            background: url($regles) no-repeat;
+          }
+        }
+        .solo:hover{
+          cursor: pointer;
+          transition: all .5s;
+          transform: scale(1.05);
+          background: url($hexagone2) no-repeat;
+          color: $gray3;
+        }
+        .online{
+          transition: all .5s;
+          margin-left: 20px;
+          margin-right: auto;
+          width: 20%;
+          height: 100%;
+          overflow: auto;
+          background: url($hexagone) no-repeat;
+          .label{
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 50px !important;
+            width: 60%;
+            height: 15%;
+            background: url($online) no-repeat;
+          }
+          .description{
+            font-family: "DDINCondensed";
+            color: $gray3;
+            margin: 10px;
+            height: 35%;
+          }
+          .rules{
+            margin-left: auto;
+            margin-right: auto;
+            width: 30%;
+            height: 15%;
+            background: url($regles) no-repeat;
+          }
+        }
+        .online:hover{
+          transition: all .5s;
+          transform: scale(1.05);
+          cursor: pointer;
+          background: url($hexagone2) no-repeat;
+          color: $gray3;
+        }
+      }
+      .second-row-hexa{
+        height: 50%;
+        margin-top: -40px;
+        .add-score{
+          margin: auto;
+          width: 20%;
+          height: 100%;
+          transition: all .5s;
+          background: url($hexagone) no-repeat;
+          overflow: auto;
+          .label{
+            margin-top: 100px !important;
+            margin-left: 30px;
+            width: 70%;
+            height: calc(100% - 100px);
+            background: url($ajout) no-repeat;
+          }
+        }
+        .add-score:hover{
+          transition: all .5s;
+          transform: scale(1.05);
+          cursor: pointer;
+          background: url($hexagone2) no-repeat;
+        }
+      }
+    }
+    .ruleContainer{
+      .ruleList{
+        display: block;
+        font-family: "DDINCondensed";
+      }
+
+
+    }
+
+  }
+  .ranking{
+    background: $gray2;
+    .globalRanking{
+      height: 100%;
+      .infoRanking{
+        padding-top: 20%;
+        height: 15%;
+        border-bottom: 1px solid $gray5;
+        .star{
+          margin: auto;
+          width: 15%;
+          height: 40px;
+          background: url($star) no-repeat;
+        }
+        .label{
+          color: $gray4;
+          margin-top: 15px !important;
+          margin-bottom: 15px !important;
+          text-align: center;
+          font-size: 30px;
+        }
+
+      }
+      .listRanking{
+        height: 65%;
+      }
+    }
+  }
+  a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: none !important;
+  }
+}

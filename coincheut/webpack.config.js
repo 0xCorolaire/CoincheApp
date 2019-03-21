@@ -4,9 +4,9 @@ const webpack = require('webpack')
 module.exports = {
   entry: "./src/index.js",
   output: {
-    path: path.resolve(__dirname, "app"),
-    publicPath: "app",
-    filename: '[name].min.js'
+    path: __dirname + "/app/smartcards",
+    publicPath: "/smartcards",
+    filename: 'smartcards.min.js'
   },
   mode: "development",
   module: {
@@ -53,10 +53,13 @@ module.exports = {
     ],
     extensions: [".js", ".json", ".jsx", ".css"]
   },
-  plugins: [],
-  target: "web",
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ],
+  devtool: "#inline-source-map",
   devServer: {
-    contentBase: path.join(__dirname, "app"),
-    historyApiFallback: true
+    contentBase: "./app",
+    hot: true,
+    historyApiFallback: false
   }
 };

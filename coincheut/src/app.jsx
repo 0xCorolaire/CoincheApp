@@ -1,22 +1,50 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom"
 import { HomePageContainer } from "./homepage"
+import { GameContainer } from "./game"
+import { mainLayoutContainer } from "./mainLayoutContainer"
+
+import {connect} from "react-redux"
+import routing from "./utils/routing"
+
 
 import "css/appStyles.scss"
 
-class App extends React.Component {
-  render(){
+const [Route, Router] = [routing.Route, routing.Router]
+const soloProps = {
+  type: "solo"
+}
 
+const onlineProps = {
+  type: "online"
+}
+
+class AppComp extends React.Component {
+  render(){
     return(
-      <Router className="fullWidth fullHeight">
-        <Switch className="fullWidth fullHeight">
-          <Route path="/" component={HomePageContainer} className="fullWidth fullHeight"/>
-          <Route path="/game" component={HomePageContainer} className="fullWidth fullHeight"/>
-        </Switch>
+      <Router className="fullWidth fullHeight" currentRoute={this.props.routing}>
+          <Route key="interface" path="/interface"  component={HomePageContainer} className="fullWidth fullHeight"/>
+          <Route key="sologame" path="/sologame"  component={GameContainer} componentProps={soloProps} className="fullWidth fullHeight"/>
+          <Route key="onlinegame" path="/onlinegame"  component={GameContainer} componentProps={onlineProps} className="fullWidth fullHeight"/>
       </Router>
     )
   }
 }
 
-export default App
+const mapStateToProps = (state) => {
+  return {
+    routing: state[routing.constants.NAME]
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+  }
+}
+
+const App = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AppComp)
+
+export default App;

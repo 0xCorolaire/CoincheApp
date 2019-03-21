@@ -1,4 +1,6 @@
 import { combineReducers } from "redux"
+import * as constants from "./interfaceConstants"
+import * as apiUtils from "../../utils/apiUtils"
 
 function Coinche(state = {}, action){
 
@@ -12,5 +14,6 @@ function Detector(state = {}, action){
 
 export const mainReducer = combineReducers({
   Coinche,
-  Detector
+  Detector,
+  [constants.API_KEY_LIST_CARDS]: apiUtils.apiReducer(constants.API_KEY_LIST_CARDS, {data: {}}),
 })

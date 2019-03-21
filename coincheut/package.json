@@ -28,15 +28,23 @@
     "webpack-dev-server": "^3.2.1"
   },
   "dependencies": {
+    "es6-promise": "^4.2.6",
+    "history": "^4.9.0",
+    "isomorphic-fetch": "^2.2.1",
     "node-sass": "^4.11.0",
+    "path-parser": "^2.0.2",
+    "query-string": "^6.4.0",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "react-redux": "^6.0.1",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.1",
+    "redux-api-middleware": "^3.0.1",
     "redux-devtools": "^3.5.0",
     "redux-thunk": "^2.3.0",
-    "sass-loader": "^7.1.0"
+    "sass-loader": "^7.1.0",
+    "url-parse": "^1.4.4",
+    "xml-js": "^1.6.11"
   }
 }
