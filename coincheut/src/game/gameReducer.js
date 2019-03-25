@@ -4,7 +4,8 @@ import * as c from "./gameConstants"
 
 const initialState = {
     type:"",
-    status: "NEW"
+    status: "NEW",
+    playersStatus: []
 }
 
 function GAMEPLAY(state = initialState, action) {
@@ -14,12 +15,25 @@ function GAMEPLAY(state = initialState, action) {
           ...state,
           status: action.status
         }
-       default:
-           return  state
+      case c.INIT_GAME:
+        return {
+          ...state,
+          playersStatus: action.playersStatus
+        }
+      default:
+        return  state
    }
 }
 
+const GAME_BETS = combineReducers({
+  [c.API_KEY_P1]: apiUtils.apiReducer(c.API_KEY_P1,{data:{}}),
+  [c.API_KEY_P2]: apiUtils.apiReducer(c.API_KEY_P2,{data:{}}),
+  [c.API_KEY_P3]: apiUtils.apiReducer(c.API_KEY_P3,{data:{}}),
+  [c.API_KEY_P4]: apiUtils.apiReducer(c.API_KEY_P4,{data:{}})
+})
+
 export const mainReducer = combineReducers({
   GAMEPLAY,
-  [c.API_KEY_GAME_HANDS]: apiUtils.apiReducer(c.API_KEY_GAME_HANDS,{data:{}})
+  [c.API_KEY_GAME_HANDS]: apiUtils.apiReducer(c.API_KEY_GAME_HANDS,{data:{}}),
+  GAME_BETS
 })

@@ -21,7 +21,7 @@ class InterfacePlayingComponent extends React.Component {
       <div className="playingInterface fullHeight fullWidth">
         <div className="first-row-hexa">
             <div className="solo">
-                <div className="label">
+                <div className="label" onClick={() => {this._loadGame("solo")}}>
                 </div>
                 <div className="description" onClick={() => {this._loadGame("solo")}}>
                   Joues à la coinche pour t'entraîner ou pour faire passer le temps contre une Intelligence Artificielle !
@@ -30,7 +30,7 @@ class InterfacePlayingComponent extends React.Component {
               </div>
             </div>
           <div className="online">
-            <div className="label">
+            <div className="label" onClick={() => {this._loadGame("online")}}>
             </div>
             <div className="description" onClick={() => {this._loadGame("online")}}>
               Joues à la coinche en ligne contre d'autres joueurs et affrontes des joueurs de ton niveau !

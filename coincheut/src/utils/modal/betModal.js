@@ -7,11 +7,18 @@ import * as c from "./modalConstants"
 import "./modal.scss"
 
 /**
-* @class Modal
+* @class BetModal
 * @property {string} modalTitle => title of modal with player to bet
-* @property {component} modalComponent => component to render inside modal
+* @property {component} modalComponent => compoentn to render inside modal
 */
-class modalComp extends React.Component {
+class BetModalComp extends React.Component {
+
+  _storeUserAction(){
+
+
+    
+    this.props.modalActivation(false)
+  }
 
   render(){
 
@@ -24,13 +31,12 @@ class modalComp extends React.Component {
                 }}>
                 <div className="modal-header">
                     <h2>{this.props.modalTitle}</h2>
-                    <span className="close-modal-btn" onClick={() => {this.props.modalActivation(false)}}>×</span>
                 </div>
                 <div className="modal-body">
                     {this.props.modalComponent}
                 </div>
                 <div className="modal-footer">
-                    <button className="btn-cancel" onClick={() => {this.props.modalActivation(false)}}>CLOSE</button>
+                    <button className="btn-bet" onClick={() => {this.props._storeUserAction()}}>BET</button>
                 </div>
             </div>
         </div>
@@ -50,9 +56,9 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const Modal = connect(
+const BetModal = connect(
   mapStateToProps,
   mapDispatchToProps
-)(modalComp)
+)(BetModalComp)
 
-export default Modal;
+export default BetModal;
