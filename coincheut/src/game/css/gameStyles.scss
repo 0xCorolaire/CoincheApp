@@ -1,7 +1,25 @@
 @mixin gameStyles() {
   .game{
     background-color: $gray2;
-
+    .menu-info{
+      display: flex;
+      align-items: center;
+      overflow: auto;
+      .label-solo{
+        height: 100px;
+        width: 150px;
+        margin: auto;
+        font-size: 30px;
+        background: url($solo) no-repeat;
+      }
+      .label-online{
+        height: 100px;
+        width: 150px;
+        margin: auto;
+        font-size: 30px;
+        background: url($online) no-repeat;
+      }
+    }
 
   }
 }
