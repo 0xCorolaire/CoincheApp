@@ -1,6 +1,7 @@
 @mixin gameStyles() {
   .game{
     background-color: $gray2;
+
     .menu-info{
       display: flex;
       align-items: center;
@@ -19,6 +20,10 @@
         font-size: 30px;
         background: url($online) no-repeat;
       }
+    }
+
+    .player-hand{
+      float: bottom;
     }
 
   }

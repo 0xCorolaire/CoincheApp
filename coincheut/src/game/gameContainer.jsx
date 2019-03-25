@@ -8,6 +8,8 @@ import * as a from "./gameActions"
 
 import { BetModal, actions } from "../utils/modal"
 
+import { PlayerHand } from "./components"
+
 import ApiStatus from "../utils/apiStatus"
 
 class GameComponent extends React.Component {
@@ -45,6 +47,9 @@ class GameComponent extends React.Component {
       <div className="game fullHeight fullWidth">
         <div className="menu-info" onClick={() => {this._getBet()}}>
           {infoLabel}
+        </div>
+        <div className="player-hand fullHeight fullWidth">
+            <PlayerHand/>
         </div>
         <BetModal className="modal" modalTitle={"BET"} modalComponent={(<div>TEST</div>)}/>
       </div>
