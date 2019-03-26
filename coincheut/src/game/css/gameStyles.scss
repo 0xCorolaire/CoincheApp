@@ -32,7 +32,6 @@
             transition: transform .3s ease-in-out;
             height: 60px;
             width: 60px;
-
             background: url($bars) no-repeat;
           }
           .icon.expanded{
@@ -43,6 +42,8 @@
         }
         .menu-content-params{
           background: $grayInt;
+          height: auto;
+          max-height: 233px;
           color: $gray4;
           display: block;
           font-size: 20px;
@@ -54,7 +55,15 @@
               margin: auto;
               height:40px;
               width: 35px;
-              background: url($hexagone) no-repeat;
+              .accueil{
+                background: url($accueil) no-repeat;
+              }
+              .params{
+                background: url($params) no-repeat;
+              }
+              .rejouer{
+                background: url($rejouer) no-repeat;
+              }
             }
             .row-menu-label{
               padding-top: 5px;

@@ -31,15 +31,15 @@ class GameMenuComponent extends React.Component {
       content = (
         <div className="menu-content-params">
           <div className="row-menu-content">
-            <div className="row-menu-icon"></div>
+            <div className="row-menu-icon params"><div className="params fullWidth fullHeight"></div></div>
             <span className="row-menu-label">Paramètres</span>
           </div>
           <div className="row-menu-content">
-            <div className="row-menu-icon"></div>
+            <div className="row-menu-icon"><div className="rejouer fullWidth fullHeight"></div></div>
             <span className="row-menu-label">Rejouer</span>
           </div>
           <div className="row-menu-content">
-            <div className="row-menu-icon"></div>
+            <div className="row-menu-icon accueil"><div className="accueil fullWidth fullHeight"></div></div>
             <span className="row-menu-label">Accueil</span>
           </div>
         </div>

@@ -24,9 +24,11 @@ const initPR = (playersStatus) => ({
 
 export const initPlayersRoles = () => {
   let playersStatus = f.initPlayersRoles()
-  return dispatch => {
-      dispatch(initPR(playersStatus))
-      dispatch(setStatus("BETTING"))
+  if(playersStatus){
+    return dispatch => {
+        dispatch(initPR(playersStatus))
+        dispatch(setStatus("BETTING"))
+    }
   }
 }
 

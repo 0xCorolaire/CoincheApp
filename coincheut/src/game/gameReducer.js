@@ -5,7 +5,7 @@ import * as c from "./gameConstants"
 const initialState = {
     type:"",
     status: "NEW",
-    playersStatus: []
+    playersStatus: null
 }
 
 function GAMEPLAY(state = initialState, action) {
