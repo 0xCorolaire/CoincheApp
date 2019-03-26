@@ -67,13 +67,36 @@
     float: right;
 }
 
-.btn-bet {
+.actions{
   margin: auto;
+  .btn-bet {
+    background: $yellow;
+    border: none;
+    color: $gray4;
+    cursor: pointer;
+    font-weight: bold;
+    height: 30px;
+    width: 85px;
+    border-radius: 5px;
+    float: right;
+  }
+
+  .btn-pass {
+    background: $yellow;
+    border: none;
+    color: $gray4;
+    cursor: pointer;
+    font-weight: bold;
+    height: 30px;
+    width: 85px;
+    margin-right: 20px;
+    border-radius: 5px;
+  }
 }
 
-.btn-pass {
-  margin: auto;
-  margin-right: 20px;
+
+.bet-component{
+  
 }
 
 .btn-continue {

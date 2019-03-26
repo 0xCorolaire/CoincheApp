@@ -25,6 +25,7 @@ export function getDealerPos(playersObj){
 export function getNextPlayer(currentPlayerNum,playersStatus){
   let nextPlayerNum
   let nextPlayerIndex
+  console.log(currentPlayerNum)
   if(currentPlayerNum === 4 ) {
     nextPlayerNum = 1
     nextPlayerIndex = playersStatus.findIndex(x => x.playerNum === nextPlayerNum)

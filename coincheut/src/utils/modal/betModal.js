@@ -9,19 +9,23 @@ import "./modal.scss"
 /**
 * @class BetModal
 * @property {string} modalTitle => title of modal with player to bet
-* @property {component} modalComponent => compoentn to render inside modal
+* @property {component} modalComponent => component to render inside modal
+* @property {function} getBet => send the call API of a bet
+* @property {object} playerNum => user that is betting num
 */
 class BetModalComp extends React.Component {
 
   _storeUserAction(){
 
-
-    
+    let bet = {
+      "value_bet": 80,
+      "type_bet": "D"
+    }
+    this.props.getBet(true,this.props.playerNum,bet,null,null,null)
     this.props.modalActivation(false)
   }
 
   render(){
-
     return (
         <div>
             <div className="modal-wrapper"
@@ -33,10 +37,15 @@ class BetModalComp extends React.Component {
                     <h2>{this.props.modalTitle}</h2>
                 </div>
                 <div className="modal-body">
-                    {this.props.modalComponent}
+                    <div className="bet-component fullHeight fullWidth">
+                      {this.props.modalComponent}
+                    </div>
                 </div>
                 <div className="modal-footer">
-                    <button className="btn-bet" onClick={() => {this.props._storeUserAction()}}>BET</button>
+                  <div className="actions">
+                    <button className="btn-pass" onClick={() => {this._storeUserAction()}}>PASSE</button>
+                    <button className="btn-bet" onClick={() => {this._storeUserAction()}}>VALIDER</button>
+                  </div>
                 </div>
             </div>
         </div>

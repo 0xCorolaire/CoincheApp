@@ -32,6 +32,11 @@ export const initPlayersRoles = () => {
   }
 }
 
+export const setNextBettor = (playerNum) => ({
+  type: c.SET_NEXT_BETTOR,
+  playerNum: playerNum
+})
+
 
 
 /* BETs */
@@ -45,14 +50,20 @@ export const getBet = (isHuman=false, playerNum, bet=null, hand=null, team_bet=n
       team_bet: team_bet,
       opposant_bet: opposant_bet
     }
-    return apiUtils.callJSONAPI(c.API_URL_GAME_BETS, key, "POST", body)
+    return dispatch => {
+      dispatch(apiUtils.callJSONAPI(c.API_URL_GAME_BETS, key, "POST", body))
+      dispatch(setNextBettor(playerNum))
+    }
   }else{
     let body = {
       hand: hand,
       team_bet: team_bet,
       opposant_bet: opposant_bet
     }
-    return apiUtils.callJSONAPI(c.API_URL_GAME_BETS, key, "POST", body)
+    return dispatch => {
+      dispatch(apiUtils.callJSONAPI(c.API_URL_GAME_BETS, key, "POST", body))
+      dispatch(setNextBettor(playerNum))
+    }
   }
 }
 

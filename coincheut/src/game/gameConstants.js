@@ -19,6 +19,7 @@ export const API_URL_GAME_BETS = API_URL + "getAiBet"
 //TYPES
 export const SET_GAME_STATUS = "STATUS"
 export const INIT_GAME = "GAME_PLAYERS"
+export const SET_NEXT_BETTOR = "SET_NEXT_BETTOR"
 
 //CST
 export const NB_PLAYER = 4

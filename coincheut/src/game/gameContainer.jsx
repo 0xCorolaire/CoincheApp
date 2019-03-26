@@ -23,18 +23,9 @@ class GameComponent extends React.Component {
   }
 
   componentDidUpdate(){
-
-  }
-
-  _getBet(){
     let userIsBetting = this.props.playersStatus.find(x => x.isHuman===true).isBetting === true
     if(userIsBetting){
-      let user = this.props.playersStatus.find(x => x.isHuman===true)
-      let bet = {
-        "value_bet": 80,
-        "type_bet": "D"
-      }
-      this.props.getBet(true,user.playerNum,bet,null,null,null)
+      this.props.modalActivation(true)
     }
   }
 
@@ -47,19 +38,19 @@ class GameComponent extends React.Component {
     let infoLabel = this.props.type === "solo" ? (<span className="label-solo"></span>) : <span className="label-online"></span>
     return (
       <div className="game fullHeight fullWidth">
-        <div className="menu-solo"  onClick={() => {this._getBet()}}>
+        <div className="menu-solo" >
           <GameMenuContainer menuTitle={infoLabel} />
         </div>
         <div className="players-hand fullHeight fullWidth">
             {
               players.map(( p , id ) => {
                 let className = "hand-" + id
-                return (<PlayerHandContainer key={id} handNum={p.playerNum} team={p.team} userHand={p.isHuman} className={className}/>)
+                return (<PlayerHandContainer key={id} handNum={p.playerNum} team={p.team} userHand={p.isHuman} className={className} />)
               })
             }
             <div className="fold">OKOKOKOK</div>
         </div>
-        <BetModal className="modal" modalTitle={"BET"} modalComponent={(<div>TEST</div>)}/>
+        <BetModal className="modal" modalTitle={"BET"} modalComponent={(<div>TEST</div>)} getBet={this.props.getBet} playerNum={this.props.playersStatus.find(x => x.isHuman===true).playerNum}/>
       </div>
     )
   }

@@ -38,12 +38,12 @@ class PlayerHandComponent extends React.Component {
 
 
                   return(
-                    <span className="card" onClick={() => {this.props.removeCardFromGand(hand[id].card_name, this.props.handNum, this.props.handsdeal.data)}}>{card.card_name}</span>
+                    <span key={card.card_name} className="card" onClick={() => {this.props.removeCardFromGand(hand[id].card_name, this.props.handNum, this.props.handsdeal.data)}}>{card.card_name}</span>
                   )
                 }else{
 
                   return(
-                    <span className="card">{card.card_name}</span>
+                    <span key={card.card_name} className="card">{card.card_name}</span>
                   )
                 }
               })
@@ -58,12 +58,12 @@ class PlayerHandComponent extends React.Component {
 
 
                   return(
-                    <span className="card" onClick={() => {this.props.removeCardFromGand(hand[id].card_name, this.props.handNum, this.props.handsdeal.data)}}>{card.card_name}</span>
+                    <span key={card.card_name} className="card" onClick={() => {this.props.removeCardFromGand(hand[id].card_name, this.props.handNum, this.props.handsdeal.data)}}>{card.card_name}</span>
                   )
                 }else{
 
                   return(
-                    <span className="card">{card.card_name}</span>
+                    <span key={card.card_name} className="card">{card.card_name}</span>
                   )
                 }
               })
