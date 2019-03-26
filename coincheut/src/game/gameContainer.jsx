@@ -40,7 +40,8 @@ class GameComponent extends React.Component {
 
   render(){
     let status = this.props.handsdeal.status
-    if(status === "LOADING" || !this.props.playersStatus ){
+    let players = this.props.playersStatus
+    if(status === "LOADING" || !players ){
       return (<ApiStatus />)
     }
     let infoLabel = this.props.type === "solo" ? (<span className="label-solo"></span>) : <span className="label-online"></span>
@@ -49,11 +50,14 @@ class GameComponent extends React.Component {
         <div className="menu-solo"  onClick={() => {this._getBet()}}>
           <GameMenuContainer menuTitle={infoLabel} />
         </div>
-
-        <div className="menu-info">
-        </div>
-        <div className="player-hand fullHeight fullWidth">
-            <PlayerHandContainer/>
+        <div className="players-hand fullHeight fullWidth">
+            {
+              players.map(( p , id ) => {
+                let className = "hand-" + id
+                return (<PlayerHandContainer key={id} handNum={p.playerNum} team={p.team} userHand={p.isHuman} className={className}/>)
+              })
+            }
+            <div className="fold">OKOKOKOK</div>
         </div>
         <BetModal className="modal" modalTitle={"BET"} modalComponent={(<div>TEST</div>)}/>
       </div>

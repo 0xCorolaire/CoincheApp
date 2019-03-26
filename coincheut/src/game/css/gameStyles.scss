@@ -2,7 +2,8 @@
   .game{
     background-color: $gray1;
     .menu-solo{
-      float: left;
+      z-index: 1;
+      position: fixed;
       width: 180px;
       background: $gray2;
       border-bottom-right-radius: 5px;
@@ -80,15 +81,47 @@
     .menu-solo:hover{
       cursor:pointer;
     }
-    .menu-info{
-      display: flex;
-      align-items: center;
-      overflow: auto;
-    }
+    .players-hand{
+      position: fixed;
+      top: 0;
+      display: grid;
+      grid-template-areas:
+      'hand1 hand2 hand2 hand2 hand3'
+      'hand1 fold fold fold hand3'
+      'hand1 fold fold fold hand3'
+      'hand1 hand0 hand0 hand0 hand3';
 
-    .player-hand{
-      float: bottom;
-    }
+      .hand-2{
+        margin: auto;
+        grid-area: hand2;
+      }
+      .hand-1{
+        margin: auto;
+        grid-area: hand1;
+        .list-cards-2{
+          .card{
+            display: block;
+          }
+        }
+      }
+      .hand-3{
+        margin: auto;
+        grid-area: hand3;
+        .list-cards-2{
+          .card{
+            display: block;
+          }
+        }
+      }
+      .hand-0{
+        margin: auto;
+        grid-area: hand0;
+      }
 
+      .fold{
+        margin: auto;
+        grid-area: fold;
+      }
+    }
   }
 }

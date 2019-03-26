@@ -24,6 +24,11 @@ class GameMenuComponent extends React.Component {
     })
   }
 
+  _goTo(param){
+    let url = "/"+ param
+    this.props.routeChange(url)
+  }
+
   render(){
     let show = this.state.showContent
     let content
@@ -38,7 +43,7 @@ class GameMenuComponent extends React.Component {
             <div className="row-menu-icon"><div className="rejouer fullWidth fullHeight"></div></div>
             <span className="row-menu-label">Rejouer</span>
           </div>
-          <div className="row-menu-content">
+          <div className="row-menu-content" onClick={() => { this._goTo("interface") }}>
             <div className="row-menu-icon accueil"><div className="accueil fullWidth fullHeight"></div></div>
             <span className="row-menu-label">Accueil</span>
           </div>
@@ -79,6 +84,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    routeChange: (url) => dispatch(routing.actions.goTo(url))
   }
 }
 

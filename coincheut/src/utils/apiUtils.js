@@ -186,6 +186,8 @@ export const apiReducer = (apiKey, initialDataState ={data:{}}, params={parser: 
     // TODO simplfy by having different reducer per refreshType
     return (state = initialState, action) => {
         let [submit, success, failed, clean] = createAPIapiTypes(apiKey)
+        let remove = "apiUtils|GAME_HANDS|REMOVE"
+
         switch (action.type) {
             case submit:
                 if(refreshType === APIUTILS_REFRESH_MANUAL)
@@ -230,6 +232,17 @@ export const apiReducer = (apiKey, initialDataState ={data:{}}, params={parser: 
                 return Object.assign({}, state, {status: APIUTILS_API_FAILED_STATE, error: error })
             case clean:
                 return initialState
+            case remove:
+                let card_name = action.cardName
+                let player = "P" + action.playerNum
+                let playerN = "P" + action.playerNum
+                let hands = action.state
+                player = hands[playerN].filter(x => x.card_name !== card_name)
+                hands[playerN] = player
+                return {
+                  ...state,
+                  data: hands
+                }
             default:
                 return state
         }

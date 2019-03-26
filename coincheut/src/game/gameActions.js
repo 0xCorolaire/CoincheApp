@@ -64,3 +64,14 @@ export const getGameHands = (newGame,listLastGameCards=[]) => {
   }
   return apiUtils.callJSONAPI(c.API_URL_GAME_HANDS, c.API_KEY_GAME_HANDS, "POST", body)
 }
+
+export const removeCardFromGand = (cardName,playerNum,state) => {
+  return dispatch => {
+    dispatch({
+      type: "apiUtils|GAME_HANDS|REMOVE",
+      cardName: cardName,
+      playerNum: playerNum,
+      state: state
+    })
+  }
+}
