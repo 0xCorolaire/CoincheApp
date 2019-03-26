@@ -23,3 +23,5 @@ export const INIT_GAME = "GAME_PLAYERS"
 //CST
 export const NB_PLAYER = 4
 export const NB_CARDS = 32
+export const GAMEPLAY = "GAMEPLAY"
+export const playersStatus = "playersStatus"

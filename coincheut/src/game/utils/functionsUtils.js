@@ -77,7 +77,10 @@ export function initPlayersRoles(){
   let playersObj = []
   let dealerPos = getRandomInt(4)
   for ( let i = 0 ; i < c.NB_PLAYER ; i++ ) {
-    let isDealer = dealerPos === i ? true : false
+    let isDealer = false
+    if(dealerPos === i+1){
+      isDealer = true
+    }
     if ( i === 0 ) {
       playersObj[i] = {
         isDealer: isDealer,

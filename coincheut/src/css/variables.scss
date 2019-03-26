@@ -4,10 +4,18 @@ $folder: "../img";
 $blue1: #E7E6E6;
 $blue2: #CDCCCC;
 
+//background
 $gray1: #E7E6E6;
+//background 2
 $gray2: #CDCCCC;
+//background interm
+$grayInt: #ededed;
+//font description
 $gray3: #9A9999;
-$gray4: #343434;
+//font normal
+$gray4: #333;
+
+//Line color
 $gray5: #999999;
 
 $red1: #b71c1c;
@@ -30,3 +38,6 @@ $loader: $folder + "/" + "spinner.svg";
 //hexa
 $hexagone: $folder + "/" + "Hexagone.svg";
 $hexagone2: $folder + "/" + "Hexagone2.svg";
+
+//bars
+$bars: $folder + "/" + "threebars.svg";

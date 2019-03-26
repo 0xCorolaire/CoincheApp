@@ -1,25 +1,80 @@
 @mixin gameStyles() {
   .game{
-    background-color: $gray2;
+    background-color: $gray1;
+    .menu-solo{
+      float: left;
+      width: 180px;
+      background: $gray2;
+      border-bottom-right-radius: 5px;
+      /* Label logo */
+      .menu-content{
+        float: inherit;
+        .menu-content-title{
+          display: flex;
+          .label-solo{
+            height: 40px;
+            width: 100px;
+            margin: 10px 0 0 8px;
+            border-right: solid 1px;
+            background: url($solo) no-repeat;
+          }
+          .label-online{
+            height: 30px;
+            width: 110px;
+            margin: 15px 0 0 8px;
+            border-right: solid 1px;
+            background: url($online) no-repeat;
+          }
+          .icon{
+            float: right !important;
+            -webkit-transition: -webkit-transform .3s ease-in-out;
+            -ms-transition: -ms-transform .3s ease-in-out;
+            transition: transform .3s ease-in-out;
+            height: 60px;
+            width: 60px;
 
+            background: url($bars) no-repeat;
+          }
+          .icon.expanded{
+            transform: rotate(90deg);
+            -ms-transform:rotate(90deg);
+            -webkit-transform:rotate(90deg);
+          }
+        }
+        .menu-content-params{
+          background: $grayInt;
+          color: $gray4;
+          display: block;
+          font-size: 20px;
+          padding-bottom: 10px;
+          border-bottom-right-radius: 5px;
+          .row-menu-content{
+            padding-top: 10px;
+            .row-menu-icon{
+              margin: auto;
+              height:40px;
+              width: 35px;
+              background: url($hexagone) no-repeat;
+            }
+            .row-menu-label{
+              padding-top: 5px;
+              margin: auto;
+              width: 80px;
+              text-align: center;
+              display: block;
+            }
+          }
+        }
+      }
+
+    }
+    .menu-solo:hover{
+      cursor:pointer;
+    }
     .menu-info{
       display: flex;
       align-items: center;
       overflow: auto;
-      .label-solo{
-        height: 100px;
-        width: 150px;
-        margin: auto;
-        font-size: 30px;
-        background: url($solo) no-repeat;
-      }
-      .label-online{
-        height: 100px;
-        width: 150px;
-        margin: auto;
-        font-size: 30px;
-        background: url($online) no-repeat;
-      }
     }
 
     .player-hand{
