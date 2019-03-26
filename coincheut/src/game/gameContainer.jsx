@@ -1,12 +1,12 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { Link } from "react-router-dom"
 import {connect} from "react-redux"
 import routing from "../utils/routing"
 import * as c from "./gameConstants"
 import * as a from "./gameActions"
 
 import { BetModal, actions } from "../utils/modal"
+import {GameMenuContainer} from "./components/gameMenu"
 
 import ApiStatus from "../utils/apiStatus"
 
@@ -26,11 +26,16 @@ class GameComponent extends React.Component {
   }
 
   _getBet(){
-    let bet = {
-      "value_bet": 80,
-      "type_bet": "D"
+    let userIsBetting = this.props.playerStatus.find(x => x.isHuman===true).isBetting === true
+    if(userIsBetting){
+      let user = this.props.playerStatus.find(x => x.isHuman===true)
+      let bet = {
+        "value_bet": 80,
+        "type_bet": "D"
+      }
+      console.log(user)
+      this.props.getBet(true,user.playerNum,bet,null,null,null)
     }
-    this.props.getBet(true,2,bet,null,null,null)
   }
 
   render(){
@@ -40,11 +45,13 @@ class GameComponent extends React.Component {
     }
 
     let infoLabel = this.props.type === "solo" ? (<span className="label-solo"></span>) : <span className="label-online"></span>
-
     return (
       <div className="game fullHeight fullWidth">
-        <div className="menu-info" onClick={() => {this._getBet()}}>
-          {infoLabel}
+        <div className="menu-solo"  onClick={() => {this._getBet()}}>
+          <GameMenuContainer menuTitle={infoLabel} />
+        </div>
+
+        <div className="menu-info">
         </div>
         <BetModal className="modal" modalTitle={"BET"} modalComponent={(<div>TEST</div>)}/>
       </div>
@@ -58,7 +65,7 @@ const mapStateToProps = (state) => {
     routing: state[routing.constants.NAME],
     game: state[c.NAME],
     handsdeal: state[c.NAME][c.API_KEY_GAME_HANDS],
-    initPlayersRoles: state[c.NAME][c.INIT_GAME]
+    playerStatus: state[c.NAME][c.GAMEPLAY][c.playersStatus]
   }
 }
 
