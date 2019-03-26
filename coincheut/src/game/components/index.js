@@ -1,3 +1,10 @@
-import {PlayerHand} from "./PlayerHand"
+import {PlayerHandContainer} from "./playerHand"
+import {GameMenuContainer} from "./gameMenu"
 
-export {PlayerHand}
+
+export {PlayerHandContainer, GameMenuContainer}
+
+export default {
+  PlayerHandContainer,
+  GameMenuContainer
+}

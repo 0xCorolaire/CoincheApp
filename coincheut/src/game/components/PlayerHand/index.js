@@ -1,4 +1,9 @@
-import PlayerHand from "./PlayerHand"
+import PlayerHandContainer from "./playerHandContainer"
 import  reducer  from "./PlayerHandReducer"
 
-export { PlayerHand, reducer }
+export { PlayerHandContainer, reducer }
+
+export default {
+  PlayerHandContainer,
+  reducer
+}

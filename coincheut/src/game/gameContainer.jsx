@@ -6,9 +6,8 @@ import * as c from "./gameConstants"
 import * as a from "./gameActions"
 
 import { BetModal, actions } from "../utils/modal"
-import {GameMenuContainer} from "./components/gameMenu"
 
-import { PlayerHand } from "./components"
+import { PlayerHandContainer, GameMenuContainer } from "./components"
 
 import ApiStatus from "../utils/apiStatus"
 
@@ -56,7 +55,7 @@ class GameComponent extends React.Component {
         <div className="menu-info">
         </div>
         <div className="player-hand fullHeight fullWidth">
-            <PlayerHand/>
+            <PlayerHandContainer/>
         </div>
         <BetModal className="modal" modalTitle={"BET"} modalComponent={(<div>TEST</div>)}/>
       </div>
