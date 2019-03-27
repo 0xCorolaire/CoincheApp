@@ -32,16 +32,17 @@ export const initPlayersRoles = () => {
   }
 }
 
-export const setNextBettor = (playerNum) => ({
+export const setNextBettor = (playerNum, playersBet) => ({
   type: c.SET_NEXT_BETTOR,
-  playerNum: playerNum
+  playerNum: playerNum,
+  playersBet: playersBet
 })
 
 
 
 /* BETs */
-export const getBet = (isHuman=false, playerNum, bet=null, hand=null, team_bet=null, opposant_bet=null) => {
-  let key = "P" + playerNum.toString()
+export const getBet = (isHuman=false, playerNum, bet=null, hand=null, team_bet=null, opposant_bet=null, playersBet = null) => {
+  let key = "bP" + playerNum.toString()
   if ( isHuman ) {
     let body = {
       isHuman: true,
@@ -52,18 +53,30 @@ export const getBet = (isHuman=false, playerNum, bet=null, hand=null, team_bet=n
     }
     return dispatch => {
       dispatch(apiUtils.callJSONAPI(c.API_URL_GAME_BETS, key, "POST", body))
-      dispatch(setNextBettor(playerNum))
+      dispatch(setNextBettor(playerNum, playersBet))
     }
   }else{
     let body = {
+      isHuman: isHuman,
       hand: hand,
       team_bet: team_bet,
       opposant_bet: opposant_bet
     }
     return dispatch => {
       dispatch(apiUtils.callJSONAPI(c.API_URL_GAME_BETS, key, "POST", body))
-      dispatch(setNextBettor(playerNum))
+      dispatch(setNextBettor(playerNum, playersBet))
     }
+  }
+}
+
+
+export const checkBets = (playersBet, currentBettor) => {
+  return dispatch => {
+    dispatch({
+      type: c.CHECK_BETS,
+      playersBet: playersBet,
+      currentBettor: currentBettor
+    })
   }
 }
 

@@ -39,16 +39,42 @@ function GAMEPLAY(state = initialState, action) {
           ...state,
           playersStatus: newPlayersStatus
         }
+      case c.CHECK_BETS:
+        let finalBet = true
+        let currentBettorNum = "bP" + action.currentBettor
+
+        for (let k in action.playersBet){
+          if ( k !== currentBettorNum ) {
+            if ( action.playersBet[k].data.type_bet !== "Pass" ) {
+              finalBet = false
+            }
+          }
+        }
+
+        if ( finalBet ) {
+          let newPlayersStatus = []
+          state.playersStatus.map((p,id) => {
+            p.isBetting = false
+            newPlayersStatus.push(p)
+          })
+          return {
+            ...state,
+            playersStatus: newPlayersStatus,
+            status: "PLAYING"
+          }
+        }else{
+          return state
+        }
       default:
         return  state
    }
 }
 
 const GAME_BETS = combineReducers({
-  [c.API_KEY_P1]: apiUtils.apiReducer(c.API_KEY_P1,{data:{}}),
-  [c.API_KEY_P2]: apiUtils.apiReducer(c.API_KEY_P2,{data:{}}),
-  [c.API_KEY_P3]: apiUtils.apiReducer(c.API_KEY_P3,{data:{}}),
-  [c.API_KEY_P4]: apiUtils.apiReducer(c.API_KEY_P4,{data:{}})
+  [c.API_KEY_P1]: apiUtils.apiReducer(c.API_KEY_P1,{data:{"value_bet": "0", "type_bet": ""}}),
+  [c.API_KEY_P2]: apiUtils.apiReducer(c.API_KEY_P2,{data:{"value_bet": "0", "type_bet": ""}}),
+  [c.API_KEY_P3]: apiUtils.apiReducer(c.API_KEY_P3,{data:{"value_bet": "0", "type_bet": ""}}),
+  [c.API_KEY_P4]: apiUtils.apiReducer(c.API_KEY_P4,{data:{"value_bet": "0", "type_bet": ""}})
 })
 
 export const mainReducer = combineReducers({

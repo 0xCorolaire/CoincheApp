@@ -237,6 +237,9 @@ export const apiReducer = (apiKey, initialDataState ={data:{}}, params={parser: 
                 let player = "P" + action.playerNum
                 let playerN = "P" + action.playerNum
                 let hands = action.state
+                if ( state.data.value_bet ) {
+                  return state
+                }
                 player = hands[playerN].filter(x => x.card_name !== card_name)
                 hands[playerN] = player
                 return {

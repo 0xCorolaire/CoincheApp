@@ -38,6 +38,39 @@
     background: $gray3;
     height: 35px;
     padding: 15px;
+    display: flex;
+    .btn-bet {
+      background: $yellow;
+      margin: auto;
+      color: $gray4;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 18px;
+      height: 40px;
+      width: 85px;
+      border-radius: 5px;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 40px;
+      margin-left: 20px;
+    }
+
+    .btn-passe {
+      background: $yellow;
+      margin-right: 20px !important;
+      margin: auto;
+      color: $gray4;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 18px;
+      height: 40px;
+      width: 85px;
+      border-radius: 5px;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 40px;
+    }
+
 }
 
 .close-modal-btn {
@@ -67,36 +100,11 @@
     float: right;
 }
 
-.actions{
-  margin: auto;
-  .btn-bet {
-    background: $yellow;
-    border: none;
-    color: $gray4;
-    cursor: pointer;
-    font-weight: bold;
-    height: 30px;
-    width: 85px;
-    border-radius: 5px;
-    float: right;
-  }
 
-  .btn-pass {
-    background: $yellow;
-    border: none;
-    color: $gray4;
-    cursor: pointer;
-    font-weight: bold;
-    height: 30px;
-    width: 85px;
-    margin-right: 20px;
-    border-radius: 5px;
-  }
-}
 
 
 .bet-component{
-  
+
 }
 
 .btn-continue {

@@ -45,12 +45,12 @@ class GameComponent extends React.Component {
             {
               players.map(( p , id ) => {
                 let className = "hand-" + id
-                return (<PlayerHandContainer key={id} handNum={p.playerNum} team={p.team} userHand={p.isHuman} className={className} />)
+                return (<PlayerHandContainer key={id} handNum={p.playerNum} team={p.team} userHand={p.isHuman} className={className} isBetting={p.isBetting} getBet={this.props.getBet} playersBet={this.props.playersBet}/>)
               })
             }
             <div className="fold">OKOKOKOK</div>
         </div>
-        <BetModal className="modal" modalTitle={"BET"} modalComponent={(<div>TEST</div>)} getBet={this.props.getBet} playerNum={this.props.playersStatus.find(x => x.isHuman===true).playerNum}/>
+        <BetModal className="modal" modalTitle={"ANNONCE"} modalComponent={(<div>TEST</div>)} getBet={this.props.getBet} playerNum={this.props.playersStatus.find(x => x.isHuman===true).playerNum} playersBet={this.props.playersBet}/>
       </div>
     )
   }
@@ -62,7 +62,8 @@ const mapStateToProps = (state) => {
     routing: state[routing.constants.NAME],
     game: state[c.NAME],
     handsdeal: state[c.NAME][c.API_KEY_GAME_HANDS],
-    playersStatus: state[c.NAME][c.GAMEPLAY][c.playersStatus]
+    playersStatus: state[c.NAME][c.GAMEPLAY][c.playersStatus],
+    playersBet: state[c.NAME][c.API_KEY_GAME_BETS]
   }
 }
 
@@ -72,7 +73,7 @@ const mapDispatchToProps = (dispatch) => {
     getGameHands: (newGame,lastListCards) => dispatch(a.getGameHands(newGame,lastListCards)),
     initPlayersRoles: () => dispatch(a.initPlayersRoles()),
     modalActivation: (sym) => dispatch(actions.modalActivation(sym)),
-    getBet:  (isHuman, playerNum, bet, hand, team_bet, opposant_bet) => dispatch(a.getBet(isHuman, playerNum, bet, hand, team_bet, opposant_bet)),
+    getBet:  (isHuman, playerNum, bet, hand, team_bet, opposant_bet, lb) => dispatch(a.getBet(isHuman, playerNum, bet, hand, team_bet, opposant_bet, lb)),
   }
 }
 

@@ -1,8 +1,7 @@
 @import "variables.scss";
 @import "../homepage/css/homepageStyles";
 @import "../game/css/gameStyles";
-
-
+@import "./progressStyle";
 
 html, body{
   margin: 0px;
@@ -13,6 +12,7 @@ html, body{
   font-size: 14px;
   font-weight: 400;
   font-family: "DDINCondensedBold";
+  @include progressStyle();
 }
 
 .loader{

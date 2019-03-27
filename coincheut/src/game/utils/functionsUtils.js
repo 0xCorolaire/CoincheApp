@@ -6,7 +6,7 @@ export function getRandomInt(max) {
 }
 
 
-/**  SENTINELLE SUR LA LISTE DES JOUEURS
+/**  SENTINELLE SUR LE DISTRIBUTEUR
 * @function getDealerPos
 * @param {array} playersObj - array des joueurs
 */
@@ -25,7 +25,6 @@ export function getDealerPos(playersObj){
 export function getNextPlayer(currentPlayerNum,playersStatus){
   let nextPlayerNum
   let nextPlayerIndex
-  console.log(currentPlayerNum)
   if(currentPlayerNum === 4 ) {
     nextPlayerNum = 1
     nextPlayerIndex = playersStatus.findIndex(x => x.playerNum === nextPlayerNum)
@@ -35,6 +34,51 @@ export function getNextPlayer(currentPlayerNum,playersStatus){
   }
   return [playersStatus[nextPlayerNum - 1], nextPlayerNum]
 }
+
+/**  RENVOIE L'ANNONCE LA PLUS FORTE ET LE NUMERO DU JOUEUR L'AYANT FAITE
+* @function getBestBettor
+* @param {array} playersBet - array des bets
+*/
+export function getBestBettor(playersBet){
+  let bestBettor = [playersBet[0].data,"bP1"]
+  playersBet.map(( bet, id ) => {
+    let currentBet = 0
+    if(bet.data.value_bet){
+      currentBet = bet.data.value_bet
+    }
+    if ( currentBet > bestBettor[0].value_bet ) {
+      let num = id + 1
+      bestBettor = [bet,"bP" + num]
+    }
+  })
+  return bestBettor
+}
+
+/**  RENVOIE L'ANNONCE LA PLUS FORTE ET LE NUMERO DU JOUEUR L'AYANT FAITE PAR EQUIPE
+* @function getBestBettorOfTeam
+* @param {array} playersBet - array des bets
+* @param {array} playersStatus - array des status des joueurs
+* @param {number} team - meilleur bet de la team a retourner
+*/
+export function getBestBettorOfTeam(playersBet, playersStatus, team){
+  let playersInTeam
+  let bestBettor
+  if ( team == 1 ) {
+    playersInTeam = [playersStatus[0],playersStatus[2]]
+  }else{
+    playersInTeam = [playersStatus[1],playersStatus[3]]
+  }
+
+  if ( playersBet["bP" + playersInTeam[0].playerNum].data.value_bet > playersBet["bP" + playersInTeam[1].playerNum].data.value_bet ) {
+    bestBettor = [playersBet["bP" + playersInTeam[0].playerNum].data, playersInTeam[0].playerNum]
+    return bestBettor
+
+  }else{
+    bestBettor = [playersBet["bP" + playersInTeam[1].playerNum].data, playersInTeam[1].playerNum]
+    return bestBettor
+  }
+}
+
 
 
 /* fonction d'initialisations */

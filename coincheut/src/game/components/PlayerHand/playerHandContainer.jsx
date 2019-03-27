@@ -3,6 +3,7 @@ import {connect} from "react-redux"
 import routing from "../../../utils/routing"
 import * as c from "../../gameConstants"
 import * as a from "../../gameActions"
+import BetStatus from '../progress/progressContainer';
 
 /**
 * @class PlayerHandComponent
@@ -10,6 +11,9 @@ import * as a from "../../gameActions"
 * @property {boolean} userHand - if true, card are revealed and set to bottom
 * @property {number} team - if 1: horizontal, 2 : vertical
 * @property {string} className - if 1: horizontal, 2 : vertical
+* @property {booelan} isBetting - if true, set spinner and bet actions
+* @property {function} getBet - getBet function passed threw props
+* @property {array} playersBet - array of bets
 */
 class PlayerHandComponent extends React.Component {
   constructor(props) {
@@ -18,7 +22,11 @@ class PlayerHandComponent extends React.Component {
   }
 
   componentDidUpdate(){
-
+    if ( this.props.gamePhase === "BETTING" ){
+      if ( this.props.isBetting ){
+        this.props.checkBets(this.props.playersBet, this.props.handNum)
+      }
+    }
   }
 
   render(){
@@ -26,8 +34,6 @@ class PlayerHandComponent extends React.Component {
     let disposition = "list-cards-" + this.props.team
     let userHand = this.props.userHand
     let className = this.props.className
-
-
     return (
       <div className={className}>
         {userHand &&
@@ -70,6 +76,30 @@ class PlayerHandComponent extends React.Component {
             }
           </div>
         }
+        {this.props.playersBet["bP" + this.props.handNum].data.type_bet !== "" && this.props.playersBet["bP" + this.props.handNum].data.type_bet !== "Pass" &&
+          <div>
+            ANNONCE : {this.props.playersBet["bP" + this.props.handNum].data.value_bet} - {this.props.playersBet["bP" + this.props.handNum].data.type_bet}
+          </div>
+        }
+        {this.props.playersBet["bP" + this.props.handNum].data.type_bet === "Pass" &&
+          <div>
+            ANNONCE : PASSE
+          </div>
+        }
+        {this.props.isBetting && this.props.gamePhase === "BETTING" &&
+          <div id="nprogressH">
+            <BetStatus
+              stopDelayMs="4000"
+              getBet={this.props.getBet}
+              playerNum={this.props.handNum}
+              playerHand={hand}
+              playerTeam={this.props.team}
+              playersBet={this.props.playersBet}
+              isHuman={userHand}
+              options={{target: '#nprogressH'}}
+            />
+          </div>
+        }
       </div>
     )
   }
@@ -81,13 +111,15 @@ const mapStateToProps = (state) => {
       game: state[c.NAME],
       handsdeal: state[c.NAME][c.API_KEY_GAME_HANDS],
       playersStatus: state[c.NAME][c.GAMEPLAY][c.playersStatus],
-      gamePhase: state[c.NAME][c.GAMEPLAY]["status"]
+      gamePhase: state[c.NAME][c.GAMEPLAY]["status"],
+      playersBet: state[c.NAME][c.API_KEY_GAME_BETS]
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-      removeCardFromGand: (card,playerNum,s) => dispatch(a.removeCardFromGand(card,playerNum,s)),
+      removeCardFromGand: (card, playerNum, s) => dispatch(a.removeCardFromGand(card,playerNum,s)),
+      checkBets: (playersBet, currentBettor) => dispatch(a.checkBets(playersBet,currentBettor)),
     }
 }
 
