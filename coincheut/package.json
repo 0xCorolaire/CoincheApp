@@ -23,6 +23,7 @@
     "htmllint-loader": "^2.1.4",
     "nprogress": "^0.2.0",
     "react-loader-spinner": "^2.3.0",
+    "react-timeout": "^1.2.0",
     "style-loader": "^0.23.1",
     "svg-inline-loader": "^0.8.0",
     "url-loader": "^1.1.2",

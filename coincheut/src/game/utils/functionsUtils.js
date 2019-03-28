@@ -35,6 +35,24 @@ export function getNextPlayer(currentPlayerNum,playersStatus){
   return [playersStatus[nextPlayerNum - 1], nextPlayerNum]
 }
 
+/**  SENTINELLE SUR LA LISTE DES JOUEURS
+* @function getPrevPlayer
+* @param {number} currentPlayerNum - numéro du joueur
+* @param {array} playersStatus - array des joueurs
+*/
+export function getPrevPlayer(currentPlayerNum,playersStatus){
+  let prevPlayerNum
+  let prevPlayerIndex
+  if(currentPlayerNum === 1 ) {
+    prevPlayerNum = 4
+    prevPlayerIndex = playersStatus.findIndex(x => x.playerNum === prevPlayerNum)
+  }else{
+    prevPlayerNum = playersStatus.find(x => x.playerNum === currentPlayerNum - 1).playerNum
+    prevPlayerIndex = playersStatus.findIndex(x => x.playerNum === prevPlayerNum)
+  }
+  return [playersStatus[prevPlayerNum - 1], prevPlayerNum]
+}
+
 /**  RENVOIE L'ANNONCE LA PLUS FORTE ET LE NUMERO DU JOUEUR L'AYANT FAITE
 * @function getBestBettor
 * @param {array} playersBet - array des bets
@@ -68,11 +86,9 @@ export function getBestBettorOfTeam(playersBet, playersStatus, team){
   }else{
     playersInTeam = [playersStatus[1],playersStatus[3]]
   }
-
-  if ( playersBet["bP" + playersInTeam[0].playerNum].data.value_bet > playersBet["bP" + playersInTeam[1].playerNum].data.value_bet ) {
+  if ( parseInt(playersBet["bP" + playersInTeam[0].playerNum].data.value_bet) > parseInt(playersBet["bP" + playersInTeam[1].playerNum].data.value_bet) ) {
     bestBettor = [playersBet["bP" + playersInTeam[0].playerNum].data, playersInTeam[0].playerNum]
     return bestBettor
-
   }else{
     bestBettor = [playersBet["bP" + playersInTeam[1].playerNum].data, playersInTeam[1].playerNum]
     return bestBettor

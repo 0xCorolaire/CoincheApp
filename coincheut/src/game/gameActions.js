@@ -75,7 +75,8 @@ export const checkBets = (playersBet, currentBettor) => {
     dispatch({
       type: c.CHECK_BETS,
       playersBet: playersBet,
-      currentBettor: currentBettor
+      currentBettor: currentBettor,
+      status: "PLAYING"
     })
   }
 }

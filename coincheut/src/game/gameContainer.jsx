@@ -23,10 +23,6 @@ class GameComponent extends React.Component {
   }
 
   componentDidUpdate(){
-    let userIsBetting = this.props.playersStatus.find(x => x.isHuman===true).isBetting === true
-    if(userIsBetting){
-      this.props.modalActivation(true)
-    }
   }
 
   render(){
@@ -45,7 +41,7 @@ class GameComponent extends React.Component {
             {
               players.map(( p , id ) => {
                 let className = "hand-" + id
-                return (<PlayerHandContainer key={id} handNum={p.playerNum} team={p.team} userHand={p.isHuman} className={className} isBetting={p.isBetting} getBet={this.props.getBet} playersBet={this.props.playersBet}/>)
+                return (<PlayerHandContainer key={id} handNum={p.playerNum} team={p.team} userHand={p.isHuman} className={className} isBetting={p.isBetting} getBet={this.props.getBet} playersBet={this.props.playersBet} activeModal={this.props.modalActivation}/>)
               })
             }
             <div className="fold">OKOKOKOK</div>

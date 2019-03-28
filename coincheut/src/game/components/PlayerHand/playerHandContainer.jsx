@@ -3,6 +3,7 @@ import {connect} from "react-redux"
 import routing from "../../../utils/routing"
 import * as c from "../../gameConstants"
 import * as a from "../../gameActions"
+import * as f from "../../utils/functionsUtils"
 import BetStatus from '../progress/progressContainer';
 
 /**
@@ -21,9 +22,37 @@ class PlayerHandComponent extends React.Component {
 
   }
 
+  componentDidMount(){
+    let doCheck = true
+    for ( let k in this.props.playersBet ) {
+      if( this.props.playersBet[k].status === "LOADING" ) {
+          doCheck = false
+      }
+    }
+    if ( this.props.gamePhase === "BETTING" && doCheck ){
+      if ( this.props.isBetting && this.props.playersBet["bP" + f.getPrevPlayer(this.props.handNum,this.props.playersStatus)[1]].status !== "LOADING"){
+        if ( this.props.userHand ) {
+          this.props.activeModal(true)
+        }
+        this.props.checkBets(this.props.playersBet, this.props.handNum)
+      }
+    }
+
+  }
+
   componentDidUpdate(){
-    if ( this.props.gamePhase === "BETTING" ){
-      if ( this.props.isBetting ){
+    let doCheck = true
+    for ( let k in this.props.playersBet ) {
+      if( this.props.playersBet[k].status === "LOADING" ) {
+          doCheck = false
+      }
+    }
+
+    if ( this.props.gamePhase === "BETTING" && doCheck ){
+      if ( this.props.isBetting && this.props.playersBet["bP" + f.getPrevPlayer(this.props.handNum,this.props.playersStatus)[1]].status !== "LOADING"){
+        if ( this.props.userHand ) {
+          this.props.activeModal(true)
+        }
         this.props.checkBets(this.props.playersBet, this.props.handNum)
       }
     }
@@ -34,6 +63,7 @@ class PlayerHandComponent extends React.Component {
     let disposition = "list-cards-" + this.props.team
     let userHand = this.props.userHand
     let className = this.props.className
+    console.log(this.props.gamePhase)
     return (
       <div className={className}>
         {userHand &&

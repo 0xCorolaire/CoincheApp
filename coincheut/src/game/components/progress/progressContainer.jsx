@@ -24,7 +24,7 @@ class BetStatusComp extends React.Component {
     this.state.timer = setTimeout(() => {
       NProgress.done();
       NProgress.remove();
-      if(!this.props.isHuman){
+      if(!this.props.isHuman && this.props.gamePhase.status === "BETTING"){
         let team_bet
         let opposant_bet
         if(this.props.playerTeam === 1 ) {
@@ -51,7 +51,7 @@ class BetStatusComp extends React.Component {
 
   componentWillUnmount(){
     //When the bet is done it unmount
-    console.log("unmount")
+    clearTimeout(this.state.timer);
   }
 
   render() {
@@ -62,7 +62,8 @@ const mapStateToProps = (state) => {
     return {
       handsdeal: state[c.NAME][c.API_KEY_GAME_HANDS],
       playersStatus: state[c.NAME][c.GAMEPLAY][c.playersStatus],
-      playersBet: state[c.NAME][c.API_KEY_GAME_BETS]
+      playersBet: state[c.NAME][c.API_KEY_GAME_BETS],
+      gamePhase: state[c.NAME][c.GAMEPLAY]
     }
 }
 

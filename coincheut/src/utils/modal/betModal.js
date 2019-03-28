@@ -19,7 +19,8 @@ class BetModalComp extends React.Component {
   _storeUserAction(value_bet,type_bet){
     let bet = {
       "value_bet": value_bet,
-      "type_bet": type_bet
+      "type_bet": type_bet,
+      "has_ascend": "false"
     }
     this.props.getBet(true, this.props.playerNum, bet, null, null, null, this.props.playersBet)
     this.props.modalActivation(false)
