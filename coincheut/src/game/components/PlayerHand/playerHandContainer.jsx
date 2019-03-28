@@ -63,7 +63,6 @@ class PlayerHandComponent extends React.Component {
     let disposition = "list-cards-" + this.props.team
     let userHand = this.props.userHand
     let className = this.props.className
-    console.log(this.props.gamePhase)
     return (
       <div className={className}>
         {userHand &&

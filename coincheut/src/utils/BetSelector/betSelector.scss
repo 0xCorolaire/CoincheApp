@@ -1,0 +1,54 @@
+@import "css/variables.scss";
+
+.bet-selector {
+  background-color: $grayInt;
+  border-radius: 5px;
+  display: inline-flex;
+  .bet-selector-left{
+    margin: auto;
+    float: left;
+    width: 30px;
+    height: 30px;
+    background: url($arrowl) no-repeat;
+    transition: all .2s ease-in-out;
+  }
+
+  .bet-selector-right{
+    margin: auto;
+    float: right;
+    width: 30px;
+    height: 30px;
+    background: url($arrowr) no-repeat;
+    transition: all .2s ease-in-out;
+  }
+
+  .bet-selector-right:hover, .bet-selector-left:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+
+
+  .selected-bet-value{
+    margin: auto;
+    width: calc(100% - 220px);
+    font-size: 32px;
+    color: $gray4;
+  }
+
+  .selected-bet-value-left{
+    margin: auto;
+    margin-bottom: 7px;
+    width: 60px;
+    font-size: 27px;
+    color: $gray5;
+  }
+
+  .selected-bet-value-right{
+    margin: auto;
+    margin-bottom: 7px;
+    width: 60px;
+    font-size: 27px;
+    color: $gray5;
+  }
+
+}
