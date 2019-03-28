@@ -100,3 +100,30 @@ export const removeCardFromGand = (cardName,playerNum,state) => {
     })
   }
 }
+
+
+/*   CLEANING STATE   */
+export const cleanGameState = () => {
+  return dispatch => {
+    dispatch({
+      type: c.CLEAN_STATE
+    })
+  }
+}
+
+export const cleanHands = () => {
+  return apiUtils.cleanJSONAPIState(c.API_KEY_GAME_HANDS)
+}
+
+export const cleanBets1 = () => {
+  return apiUtils.cleanJSONAPIState(c.API_KEY_P1)
+}
+export const cleanBets2 = () => {
+  return apiUtils.cleanJSONAPIState(c.API_KEY_P2)
+}
+export const cleanBets3 = () => {
+  return apiUtils.cleanJSONAPIState(c.API_KEY_P3)
+}
+export const cleanBets4 = () => {
+  return apiUtils.cleanJSONAPIState(c.API_KEY_P4)
+}

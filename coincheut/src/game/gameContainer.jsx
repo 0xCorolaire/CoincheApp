@@ -25,6 +25,15 @@ class GameComponent extends React.Component {
   componentDidUpdate(){
   }
 
+  componentWillUnmount(){
+    this.props.cleanGameState()
+    this.props.cleanHands()
+    this.props.cleanBets2()
+    this.props.cleanBets1()
+    this.props.cleanBets3()
+    this.props.cleanBets4()
+  }
+
   render(){
     let status = this.props.handsdeal.status
     let players = this.props.playersStatus
@@ -70,6 +79,13 @@ const mapDispatchToProps = (dispatch) => {
     initPlayersRoles: () => dispatch(a.initPlayersRoles()),
     modalActivation: (sym) => dispatch(actions.modalActivation(sym)),
     getBet:  (isHuman, playerNum, bet, hand, team_bet, opposant_bet, lb) => dispatch(a.getBet(isHuman, playerNum, bet, hand, team_bet, opposant_bet, lb)),
+    cleanGameState: () => dispatch(a.cleanGameState()),
+    cleanHands: () => dispatch(a.cleanHands()),
+    cleanBets1: () => dispatch(a.cleanBets1()),
+    cleanBets2: () => dispatch(a.cleanBets2()),
+    cleanBets3: () => dispatch(a.cleanBets3()),
+    cleanBets4: () => dispatch(a.cleanBets4())
+
   }
 }
 

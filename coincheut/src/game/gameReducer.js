@@ -66,6 +66,8 @@ function GAMEPLAY(state = initialState, action) {
         }else{
           return state
         }
+      case c.CLEAN_STATE:
+        return initialState
       default:
         return  state
    }

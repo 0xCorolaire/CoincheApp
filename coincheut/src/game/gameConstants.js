@@ -22,6 +22,8 @@ export const INIT_GAME = "GAME_PLAYERS"
 export const SET_NEXT_BETTOR = "SET_NEXT_BETTOR"
 export const CHECK_BETS = "CHECK_BETS"
 
+export const CLEAN_STATE = "CLEAN_STATE"
+
 
 //CST
 export const NB_PLAYER = 4
