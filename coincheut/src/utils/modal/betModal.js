@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from "react-dom"
 import {connect} from "react-redux"
-import { modalActivation } from "./modalActions"
+import { modalActivation, storeType } from "./modalActions"
 import { BetSelector } from "../BetSelector"
 import * as c from "./modalConstants"
 
@@ -14,20 +14,38 @@ import "./modal.scss"
 * @property {function} getBet => send the call API of a bet
 * @property {object} playerNum => user that is betting num
 * @property {object} playerBet => array of bets
+* @property {number} minBet => Minimum Bet to send
 */
 class BetModalComp extends React.Component {
 
-  _storeUserAction(){
+  _storeType(type){
+    this.props.storeType(type)
+  }
+
+  _storeUserAction(type){
     let bet = {
       "value_bet": this.props.modal.value,
       "type_bet": this.props.modal.type,
       "has_ascend": "false"
     }
-    this.props.getBet(true, this.props.playerNum, bet, null, null, null, this.props.playersBet)
-    this.props.modalActivation(false)
+    let passBet = {
+      "value_bet": "0",
+      "type_bet": "Pass",
+      "has_ascend": "false"
+    }
+    if ( type === "PASS" ) {
+      this.props.getBet(true, this.props.playerNum, passBet, null, null, null, this.props.playersBet)
+      this.props.modalActivation(false)
+    }else{
+      if ( this.props.modal.type && this.props.modal.value ){
+        this.props.getBet(true, this.props.playerNum, bet, null, null, null, this.props.playersBet)
+        this.props.modalActivation(false)
+      }
+    }
   }
 
   render(){
+    console.log(this.props.minBet)
     return (
         <div className="bet-user">
             <div className="modal-wrapper"
@@ -41,13 +59,33 @@ class BetModalComp extends React.Component {
                 <div className="modal-body">
                     <div className="bet-component fullHeight fullWidth">
                       <div className="bet-value">
-                        <BetSelector minBet={90} isActive={this.props.modal.isActive}/>
+                        <BetSelector minBet={this.props.minBet} isActive={this.props.modal.isActive}/>
+                      </div>
+                      <div className="bet-type">
+                        <div className="special-types">
+                          <div key={"TA"} className={this.props.modal.type === "TA" ? "btn-type active" : "btn-type"} onClick={() => {this._storeType("TA")}}>
+                            TOUT ATOUT
+                          </div>
+                          <div key={"SA"} className={this.props.modal.type === "SA" ? "btn-type active" : "btn-type"} onClick={() => {this._storeType("SA")}}>
+                            SANS ATOUT
+                          </div>
+                        </div>
+                        <div className="normal-types">
+                          <div key={"C"} className={this.props.modal.type === "C" ? "btn-type c active" : "btn-type c"} onClick={() => {this._storeType("C")}}>
+                          </div>
+                          <div key={"H"} className={this.props.modal.type === "H" ? "btn-type h active" : "btn-type h"} onClick={() => {this._storeType("H")}}>
+                          </div>
+                          <div key={"S"} className={this.props.modal.type === "S" ? "btn-type s active" : "btn-type s"} onClick={() => {this._storeType("S")}}>
+                          </div>
+                          <div key={"D"} className={this.props.modal.type === "D" ? "btn-type d active" : "btn-type d"} onClick={() => {this._storeType("D")}}>
+                          </div>
+                        </div>
                       </div>
                     </div>
                 </div>
                 <div className="modal-footer">
-                    <div className="btn-passe" onClick={() => {this._storeUserAction()}}>PASSE</div>
-                    <div className="btn-bet" onClick={() => {this._storeUserAction()}}>VALIDER</div>
+                    <div className="btn-passe" onClick={() => {this._storeUserAction("PASS")}}>PASSE</div>
+                    <div className="btn-bet" onClick={() => {this._storeUserAction("")}}>VALIDER</div>
                 </div>
             </div>
         </div>
@@ -63,7 +101,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    modalActivation: (sym) => dispatch(modalActivation(sym))
+    modalActivation: (sym) => dispatch(modalActivation(sym)),
+    storeType: (t) => dispatch(storeType(t))
   }
 }
 

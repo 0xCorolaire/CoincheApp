@@ -4,7 +4,8 @@ import routing from "../../../utils/routing"
 import * as c from "../../gameConstants"
 import * as a from "../../gameActions"
 import * as f from "../../utils/functionsUtils"
-import BetStatus from '../progress/progressContainer';
+import BetStatus from '../progress/betStatus';
+import { ShowAnnounce } from "./components"
 
 /**
 * @class PlayerHandComponent
@@ -63,8 +64,12 @@ class PlayerHandComponent extends React.Component {
     let disposition = "list-cards-" + this.props.team
     let userHand = this.props.userHand
     let className = this.props.className
+    let location = "loc-" + this.props.playersStatus.indexOf(this.props.playersStatus.find(x => x.playerNum === this.props.handNum))
     return (
       <div className={className}>
+        {this.props.playersBet["bP" + this.props.handNum].data.type_bet !== "" && ( location === "loc-0" || location === "loc-3" ) &&
+          <ShowAnnounce value_bet={this.props.playersBet["bP" + this.props.handNum].data.value_bet} type_bet={this.props.playersBet["bP" + this.props.handNum].data.type_bet} location={location}/>
+        }
         {userHand &&
           <div className={disposition}>
             {
@@ -89,32 +94,17 @@ class PlayerHandComponent extends React.Component {
           <div className={disposition}>
             {
               hand.map((card, id) => {
-                if(this.props.gamePhase!=="BETTING"){
-
-
-                  return(
-                    <span key={card.card_name} className="card" onClick={() => {this.props.removeCardFromGand(hand[id].card_name, this.props.handNum, this.props.handsdeal.data)}}>{card.card_name}</span>
-                  )
-                }else{
-
-                  return(
-                    <span key={card.card_name} className="card">{card.card_name}</span>
-                  )
-                }
+                return(
+                  <span key={card.card_name} className="card">{card.card_name}</span>
+                )
               })
             }
           </div>
         }
-        {this.props.playersBet["bP" + this.props.handNum].data.type_bet !== "" && this.props.playersBet["bP" + this.props.handNum].data.type_bet !== "Pass" &&
-          <div>
-            ANNONCE : {this.props.playersBet["bP" + this.props.handNum].data.value_bet} - {this.props.playersBet["bP" + this.props.handNum].data.type_bet}
-          </div>
+        {this.props.playersBet["bP" + this.props.handNum].data.type_bet !== "" && ( location === "loc-1" || location === "loc-2" ) &&
+          <ShowAnnounce value_bet={this.props.playersBet["bP" + this.props.handNum].data.value_bet} type_bet={this.props.playersBet["bP" + this.props.handNum].data.type_bet} location={location}/>
         }
-        {this.props.playersBet["bP" + this.props.handNum].data.type_bet === "Pass" &&
-          <div>
-            ANNONCE : PASSE
-          </div>
-        }
+
         {this.props.isBetting && this.props.gamePhase === "BETTING" &&
           <div id="nprogressH">
             <BetStatus
@@ -140,7 +130,7 @@ const mapStateToProps = (state) => {
       game: state[c.NAME],
       handsdeal: state[c.NAME][c.API_KEY_GAME_HANDS],
       playersStatus: state[c.NAME][c.GAMEPLAY][c.playersStatus],
-      gamePhase: state[c.NAME][c.GAMEPLAY]["status"],
+      gamePhase: state[c.NAME][c.GAMEPLAY][c.STATUS],
       playersBet: state[c.NAME][c.API_KEY_GAME_BETS]
     }
 }

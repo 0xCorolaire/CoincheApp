@@ -71,12 +71,14 @@ export const getBet = (isHuman=false, playerNum, bet=null, hand=null, team_bet=n
 
 
 export const checkBets = (playersBet, currentBettor) => {
+  let finalBet = f.getBestBettor(playersBet)
   return dispatch => {
     dispatch({
       type: c.CHECK_BETS,
       playersBet: playersBet,
       currentBettor: currentBettor,
-      status: "PLAYING"
+      status: "PLAYING",
+      finalBet: finalBet
     })
   }
 }

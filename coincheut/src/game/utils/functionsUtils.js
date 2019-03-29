@@ -58,17 +58,18 @@ export function getPrevPlayer(currentPlayerNum,playersStatus){
 * @param {array} playersBet - array des bets
 */
 export function getBestBettor(playersBet){
-  let bestBettor = [playersBet[0].data,"bP1"]
-  playersBet.map(( bet, id ) => {
-    let currentBet = 0
-    if(bet.data.value_bet){
-      currentBet = bet.data.value_bet
+  let bestBettor = [playersBet["bP1"].data,1]
+  let bestBettorNum = "bP1"
+  for ( let k in playersBet ) {
+    let currentBet
+    if ( playersBet[k].data.value_bet ) {
+      currentBet = playersBet[k].data.value_bet
     }
-    if ( currentBet > bestBettor[0].value_bet ) {
-      let num = id + 1
-      bestBettor = [bet,"bP" + num]
+    if ( parseInt(currentBet) > parseInt(bestBettor[0].value_bet) ) {
+      bestBettorNum = k
+      bestBettor = [playersBet[k].data,k.slice(-1)]
     }
-  })
+  }
   return bestBettor
 }
 

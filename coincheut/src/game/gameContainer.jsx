@@ -4,6 +4,7 @@ import {connect} from "react-redux"
 import routing from "../utils/routing"
 import * as c from "./gameConstants"
 import * as a from "./gameActions"
+import * as f from "./utils/functionsUtils"
 
 import { BetModal, actions } from "../utils/modal"
 
@@ -23,6 +24,11 @@ class GameComponent extends React.Component {
   }
 
   componentDidUpdate(){
+    if ( this.props.gamePlay.status === "REDISTRIBUTE") {
+      this.props.setStatus("STARTED")
+      this.props.getGameHands("True")
+      this.props.initPlayersRoles()
+    }
   }
 
   componentWillUnmount(){
@@ -37,6 +43,7 @@ class GameComponent extends React.Component {
   render(){
     let status = this.props.handsdeal.status
     let players = this.props.playersStatus
+    let minBet = parseInt(f.getBestBettor(this.props.playersBet)[0].value_bet)
     if(status === "LOADING" || !players ){
       return (<ApiStatus />)
     }
@@ -53,9 +60,9 @@ class GameComponent extends React.Component {
                 return (<PlayerHandContainer key={id} handNum={p.playerNum} team={p.team} userHand={p.isHuman} className={className} isBetting={p.isBetting} getBet={this.props.getBet} playersBet={this.props.playersBet} activeModal={this.props.modalActivation}/>)
               })
             }
-            <div className="fold">OKOKOKOK</div>
+            <div className="fold">{this.props.gamePlay.status}</div>
         </div>
-        <BetModal className="modal" modalTitle={"ANNONCE"} modalComponent={(<div>TEST</div>)} getBet={this.props.getBet} playerNum={this.props.playersStatus.find(x => x.isHuman===true).playerNum} playersBet={this.props.playersBet}/>
+        <BetModal className="modal" modalTitle={"ANNONCE"} modalComponent={(<div>TEST</div>)} getBet={this.props.getBet} playerNum={this.props.playersStatus.find(x => x.isHuman===true).playerNum} playersBet={this.props.playersBet} minBet={minBet}/>
       </div>
     )
   }
@@ -66,6 +73,7 @@ const mapStateToProps = (state) => {
   return {
     routing: state[routing.constants.NAME],
     game: state[c.NAME],
+    gamePlay: state[c.NAME][c.GAMEPLAY],
     handsdeal: state[c.NAME][c.API_KEY_GAME_HANDS],
     playersStatus: state[c.NAME][c.GAMEPLAY][c.playersStatus],
     playersBet: state[c.NAME][c.API_KEY_GAME_BETS]

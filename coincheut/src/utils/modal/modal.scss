@@ -16,6 +16,7 @@
 
 .bet-user{
   .modal-wrapper {
+      top: 180px;
       width: 40%;
   }
 }
@@ -40,8 +41,82 @@
     .bet-value{
       margin: auto;
       margin-top: 10px;
+      margin-bottom: 10px;
       height: 50px;
       width: 50%;
+    }
+    .bet-type{
+      height: calc(100% - 70px);
+      margin: auto;
+      margin-top: 20px;
+      display: grid;
+      grid-template-areas:
+      "special-types" "normal-types";
+      grid-template-columns: 40% 60%;
+      .special-types{
+        grid-area: "special-types";
+        margin: auto;
+        .btn-type{
+          margin: 10px;
+          background: $grayInt;
+          line-height: 30px;
+          border-radius: 5px;
+          width: 100px;
+          height: 30px;
+          transition: all .2s ease-in-out;
+        }
+        .btn-type:hover {
+          cursor: pointer;
+          transform: scale(1.1);
+        }
+        .active {
+          background: $gray3 !important;
+        }
+      }
+      .normal-types{
+        grid-area: "normal-types";
+        margin: auto;
+        display: flex;
+        .btn-type{
+          margin: 10px;
+          background-color: $grayInt;
+          line-height: 50px;
+          border-radius: 5px;
+          width: 50px;
+          height: 50px;
+          transition: all .2s ease-in-out;
+        }
+        .btn-type:hover {
+          cursor: pointer;
+          transform: scale(1.1);
+        }
+        .h {
+          background: url($heart) no-repeat;
+        }
+        .d {
+          background: url($diamond) no-repeat;
+        }
+        .c {
+          background: url($clove) no-repeat;
+        }
+        .s {
+          background: url($spike) no-repeat;
+        }
+
+        .h.active {
+          background: url($heartS) no-repeat;
+        }
+        .d.active {
+          background: url($diamondS) no-repeat;
+        }
+        .c.active {
+          background: url($cloveS) no-repeat;
+        }
+        .s.active {
+          background: url($spikeS) no-repeat;
+        }
+      }
+
     }
 }
 
@@ -64,8 +139,8 @@
       vertical-align: middle;
       line-height: 40px;
       margin-left: 20px;
+      transition: all .2s ease-in-out;
     }
-
     .btn-passe {
       background: $grayInt;
       margin-right: 20px !important;
@@ -80,13 +155,12 @@
       text-align: center;
       vertical-align: middle;
       line-height: 40px;
+      transition: all .2s ease-in-out;
     }
-
     .btn-passe:hover,
     .btn-bet:hover {
-      box-shadow: 0.5px 0.5px 0.5px $gray1;
+      transform: scale(1.1);
     }
-
 }
 
 .close-modal-btn {

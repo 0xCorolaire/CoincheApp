@@ -21,6 +21,18 @@ class BetSelectorComp extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if ( this.props.minBet !== prevProps.minBet ) {
+      let sliced = f.getPossibleBets(this.props.minBet)  
+      sliced.push("CAPOT")
+      this.props.storeValue(sliced[0].toString())
+      this.setState({
+        possibleBets: sliced,
+        selectedBet: sliced[0]
+      })
+    }
+  }
+
   componentDidMount(){
     let sliced = f.getPossibleBets(this.props.minBet)
     sliced.push("CAPOT")
@@ -28,6 +40,13 @@ class BetSelectorComp extends React.Component {
     this.setState({
       possibleBets: sliced,
       selectedBet: sliced[0]
+    })
+  }
+
+  componentWillUnmount(){
+    this.setState({
+      possibleBets: [],
+      selectedBet: null
     })
   }
 

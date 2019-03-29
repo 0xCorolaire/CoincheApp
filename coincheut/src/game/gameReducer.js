@@ -7,11 +7,13 @@ import * as f from "./utils/functionsUtils"
 const initialState = {
     type:"",
     status: "NEW",
-    playersStatus: null
+    playersStatus: null,
+    finalBet: null,
+    isCoinched: false
 }
 
 function GAMEPLAY(state = initialState, action) {
-   switch (action.type) {
+   switch ( action.type ) {
       case c.SET_GAME_STATUS:
         return {
           ...state,
@@ -41,6 +43,7 @@ function GAMEPLAY(state = initialState, action) {
         }
       case c.CHECK_BETS:
         let finalBet = true
+        let redistribute = true
         let currentBettorNum = "bP" + action.currentBettor
         for (let k in action.playersBet){
           if ( k !== currentBettorNum ) {
@@ -50,6 +53,15 @@ function GAMEPLAY(state = initialState, action) {
           }
           if ( action.playersBet[k].status === "NEW" ) {
             return state
+          }
+          if ( action.playersBet[k].data.type_bet !== "Pass" ) {
+            redistribute = false
+          }
+        }
+        if ( redistribute ) {
+          return {
+            ...initialState,
+            status: "REDISTRIBUTE"
           }
         }
         if ( finalBet ) {
@@ -61,7 +73,8 @@ function GAMEPLAY(state = initialState, action) {
           return {
             ...state,
             playersStatus: newPlayersStatus,
-            status: action.status
+            status: action.status,
+            finalBet: action.finalBet
           }
         }else{
           return state
@@ -73,6 +86,24 @@ function GAMEPLAY(state = initialState, action) {
    }
 }
 
+const initialeScoreState = {
+  team1_score: 0,
+  team2_score: 0,
+  limit: 1500
+}
+
+function SCORE(state = initialeScoreState, action) {
+  switch ( action.type ) {
+
+
+
+
+    default:
+      return state
+  }
+}
+
+
 const GAME_BETS = combineReducers({
   [c.API_KEY_P1]: apiUtils.apiReducer(c.API_KEY_P1,{data:{"value_bet": "0", "type_bet": "", "has_ascend": "false"}}),
   [c.API_KEY_P2]: apiUtils.apiReducer(c.API_KEY_P2,{data:{"value_bet": "0", "type_bet": "", "has_ascend": "false"}}),
@@ -83,5 +114,6 @@ const GAME_BETS = combineReducers({
 export const mainReducer = combineReducers({
   GAMEPLAY,
   [c.API_KEY_GAME_HANDS]: apiUtils.apiReducer(c.API_KEY_GAME_HANDS,{data:{}}),
-  GAME_BETS
+  GAME_BETS,
+  [c.GAME_SCORE]: SCORE
 })

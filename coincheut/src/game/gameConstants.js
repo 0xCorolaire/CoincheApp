@@ -29,4 +29,6 @@ export const CLEAN_STATE = "CLEAN_STATE"
 export const NB_PLAYER = 4
 export const NB_CARDS = 32
 export const GAMEPLAY = "GAMEPLAY"
+export const GAME_SCORE = "GAME_SCORE"
+export const STATUS = "status"
 export const playersStatus = "playersStatus"

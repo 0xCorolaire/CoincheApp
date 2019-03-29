@@ -1,0 +1,70 @@
+@import "css/variables.scss";
+
+$dmd: "../../" + $diamond;
+$spk: "../../" + $spike;
+$hrt: "../../" + $heart;
+$clv: "../../" + $clove;
+
+//bottom hand
+.loc-0 {
+  top: -30px;
+  left: 0;
+}
+//top
+.loc-2 {
+  top: 30px;
+  left: 120px;
+}
+
+.loc-1 {
+  top: 0px;
+  left: 60px;
+}
+
+.loc-3 {
+  top: 0px;
+  right: 120px;
+}
+
+
+
+.value-passe{
+  text-align: center;
+  font-size: 26px;
+}
+
+
+.show-announce{
+  position: relative;
+  height: 50px;
+  width: 80px;
+  background: $grayInt;
+  line-height: 50px;
+  border-radius: 5px;
+  display: flex;
+  .value{
+    width: 30px;
+    text-align: center;
+    font-size: 26px;
+  }
+  .D {
+    height: 50px;
+    width: 50px;
+    background: url($dmd) no-repeat;
+  }
+  .S {
+    height: 50px;
+    width: 50px;
+    background: url($spk) no-repeat;
+  }
+  .C {
+    height: 50px;
+    width: 50px;
+    background: url($clv) no-repeat;
+  }
+  .H {
+    height: 50px;
+    width: 50px;
+    background: url($hrt) no-repeat;
+  }
+}

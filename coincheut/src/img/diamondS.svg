@@ -1,0 +1,17 @@
+<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">
+ <style>.cls-1{fill:#ff1d25;}.bckg{fill:#9A9999;}</style>
+
+ <title>heart</title>
+ <g>
+  <title>background</title>
+  <rect x="-1" y="-1" width="52" height="52" id="canvas_background" class="bckg"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <g stroke="null" id="Calque_2">
+   <g stroke="null" id="Calque_1-2">
+    <path stroke="null" class="cls-1" d="m42,24.943806a5.09586,4.627411 0 0 1 -0.254793,0.427146l-16.365549,19.702093c-0.470387,0.569528 -1.117169,0.533932 -1.646355,-0.088989l-12.896444,-15.537423c-1.097569,-1.33483 -2.19514,-2.66966 -3.312308,-3.986693a0.783978,0.711909 0 0 1 0,-1.014471l16.228352,-19.577509a0.940774,0.854291 0 0 1 1.685553,0l16.267552,19.577509a4.311881,3.915502 0 0 1 0.293992,0.498337l0.000001,-0.000001z" id="svg_1"/>
+   </g>
+  </g>
+ </g>
+</svg>
