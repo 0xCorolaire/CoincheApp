@@ -104,6 +104,18 @@ function SCORE(state = initialeScoreState, action) {
 }
 
 
+function GAME_CARDS(state = {}, action) {
+  switch ( action.type ) {
+
+
+
+
+    default:
+      return state
+  }
+}
+
+
 const GAME_BETS = combineReducers({
   [c.API_KEY_P1]: apiUtils.apiReducer(c.API_KEY_P1,{data:{"value_bet": "0", "type_bet": "", "has_ascend": "false"}}),
   [c.API_KEY_P2]: apiUtils.apiReducer(c.API_KEY_P2,{data:{"value_bet": "0", "type_bet": "", "has_ascend": "false"}}),
@@ -115,5 +127,6 @@ export const mainReducer = combineReducers({
   GAMEPLAY,
   [c.API_KEY_GAME_HANDS]: apiUtils.apiReducer(c.API_KEY_GAME_HANDS,{data:{}}),
   GAME_BETS,
-  [c.GAME_SCORE]: SCORE
+  [c.GAME_SCORE]: SCORE,
+  GAME_CARDS
 })

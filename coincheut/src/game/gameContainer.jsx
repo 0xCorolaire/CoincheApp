@@ -25,6 +25,12 @@ class GameComponent extends React.Component {
 
   componentDidUpdate(){
     if ( this.props.gamePlay.status === "REDISTRIBUTE") {
+      this.props.cleanGameState()
+      this.props.cleanHands()
+      this.props.cleanBets2()
+      this.props.cleanBets1()
+      this.props.cleanBets3()
+      this.props.cleanBets4()
       this.props.setStatus("STARTED")
       this.props.getGameHands("True")
       this.props.initPlayersRoles()
