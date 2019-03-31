@@ -51,10 +51,11 @@ class PlayerHandComponent extends React.Component {
 
     if ( this.props.gamePhase === "BETTING" && doCheck ){
       if ( this.props.isBetting && this.props.playersBet["bP" + f.getPrevPlayer(this.props.handNum,this.props.playersStatus)[1]].status !== "LOADING"){
+        this.props.checkBets(this.props.playersBet, this.props.handNum)
+
         if ( this.props.userHand ) {
           this.props.activeModal(true)
         }
-        this.props.checkBets(this.props.playersBet, this.props.handNum)
       }
     }
   }

@@ -21,6 +21,9 @@ export const SET_GAME_STATUS = "STATUS"
 export const INIT_GAME = "GAME_PLAYERS"
 export const SET_NEXT_BETTOR = "SET_NEXT_BETTOR"
 export const CHECK_BETS = "CHECK_BETS"
+export const ADD_TO_FOLD = "ADD_TO_FOLD"
+export const STORE_FOLD_PILE = "STORE_FOLD_PILE"
+
 
 export const CLEAN_STATE = "CLEAN_STATE"
 

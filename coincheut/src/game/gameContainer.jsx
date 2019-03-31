@@ -62,7 +62,7 @@ class GameComponent extends React.Component {
             }
             <div className="fold">{this.props.gamePlay.status}</div>
         </div>
-        <BetModal className="modal" modalTitle={"ANNONCE"} modalComponent={(<div>TEST</div>)} getBet={this.props.getBet} playerNum={this.props.playersStatus.find(x => x.isHuman===true).playerNum} playersBet={this.props.playersBet} minBet={minBet}/>
+        <BetModal className="modal" modalTitle={"ANNONCE"} modalComponent={(<div>TEST</div>)} getBet={this.props.getBet} playerNum={this.props.playersStatus.find(x => x.isHuman===true).playerNum} playersBet={this.props.playersBet} minBet={minBet} status={this.props.gamePlay.status}/>
       </div>
     )
   }

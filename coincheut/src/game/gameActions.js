@@ -104,6 +104,18 @@ export const removeCardFromGand = (cardName,playerNum,state) => {
 }
 
 
+/* FOLD */
+const addFold = (card) => ({
+  type: c.ADD_TO_FOLD,
+  card: card
+})
+
+export const addToFold = (card) => {
+  return dispatch => {
+    dispatch(addFold(card))
+  }
+}
+
 /*   CLEANING STATE   */
 export const cleanGameState = () => {
   return dispatch => {
