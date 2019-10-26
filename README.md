@@ -1,9 +1,14 @@
 # CoincheApp
 Application de coinche/Belote coinchée en ReactJS/Redux/Thunk
-Utilise webpack et babel
-to hot load dev :
-```
-cd coincheut
-npm install
-npm run webpack
-```
+
+Backend : https://github.com/hugofloter/SmartCards
+
+Accueil : 
+
+![](images/accueil.jpg)
+
+Menu : 
+![](images/menu.jpg)
+
+Tapis : 
+![](images/tapis.jpg)
