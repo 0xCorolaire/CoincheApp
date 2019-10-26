@@ -116,6 +116,25 @@ export const addToFold = (card) => {
   }
 }
 
+export const setNewFold = () => {
+  return dispatch => {
+    dispatch({
+      type: c.INIT_FOLD
+    })
+  }
+}
+
+export const getAiMove = (params) => {
+  let body =  {
+    cards_played: params.cards_played,
+    atout: params.atout,
+    opening_color: params.opening_color,
+    remaining_cards: params.remaining_cards
+  }
+  return apiUtils.callJSONAPI(c.GET_PLAYED_MOVE_URL, c.GET_PLAYED_MOVE_KEY, "POST", body)
+}
+
+
 /*   CLEANING STATE   */
 export const cleanGameState = () => {
   return dispatch => {
@@ -140,4 +159,7 @@ export const cleanBets3 = () => {
 }
 export const cleanBets4 = () => {
   return apiUtils.cleanJSONAPIState(c.API_KEY_P4)
+}
+export const cleanCardPlayed = () => {
+  return apiUtils.cleanJSONAPIState(c.GET_PLAYED_MOVE_KEY)
 }

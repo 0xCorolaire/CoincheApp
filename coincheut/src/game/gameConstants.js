@@ -21,8 +21,13 @@ export const SET_GAME_STATUS = "STATUS"
 export const INIT_GAME = "GAME_PLAYERS"
 export const SET_NEXT_BETTOR = "SET_NEXT_BETTOR"
 export const CHECK_BETS = "CHECK_BETS"
+export const INIT_FOLD = "INIT_FOLD"
+export const GET_PLAYED_MOVE_KEY = "PLAYED_MOVE"
+export const GET_PLAYED_MOVE_URL = API_URL + "getAiNormalMove"
 export const ADD_TO_FOLD = "ADD_TO_FOLD"
 export const STORE_FOLD_PILE = "STORE_FOLD_PILE"
+export const EVALUATE_FOLD = "EVALUATE_FOLD"
+
 
 
 export const CLEAN_STATE = "CLEAN_STATE"
@@ -32,6 +37,9 @@ export const CLEAN_STATE = "CLEAN_STATE"
 export const NB_PLAYER = 4
 export const NB_CARDS = 32
 export const GAMEPLAY = "GAMEPLAY"
+export const GAME_CARDS = "GAME_CARDS"
+export const CARDS_ORGA = "CARDS_ORGA"
 export const GAME_SCORE = "GAME_SCORE"
 export const STATUS = "status"
+export const finalBet = "finalBet"
 export const playersStatus = "playersStatus"

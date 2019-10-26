@@ -13,7 +13,7 @@ import "./modal.scss"
 * @property {component} modalComponent => component to render inside modal
 * @property {function} getBet => send the call API of a bet
 * @property {object} playerNum => user that is betting num
-* @property {object} playerBet => array of bets
+* @property {object} playersBet => array of bets
 * @property {number} minBet => Minimum Bet to send
 * @property {string} status => status
 */
@@ -46,7 +46,6 @@ class BetModalComp extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log(this.props.status)
     if ( this.props.status === "PLAYING" && this.props.modal.isActive === true) {
       this.props.modalActivation(false)
     }

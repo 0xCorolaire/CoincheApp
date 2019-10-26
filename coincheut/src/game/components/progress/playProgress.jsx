@@ -6,8 +6,14 @@ import * as c from "../../gameConstants"
 import * as a from "../../gameActions"
 import * as f from "../../utils/functionsUtils"
 
+/**
+* @class PlayStatus
+* @property {string/number} stopDelayMs
+* @property {string} atout atout of the game
+* @property {array} playerHand array of card of the curr player
+* @property {boolean} isHuman if user is human
+*/
 
-/* eslint-disable react/prefer-stateless-function */
 class PlayStatusComp extends React.Component {
   constructor(props){
     super(props)
@@ -24,8 +30,32 @@ class PlayStatusComp extends React.Component {
     this.state.timer = setTimeout(() => {
       NProgress.done();
       NProgress.remove();
+      let requestMove = {}
+      if ( !this.props.isHuman ) {
+        if ( this.props.gameOrga.foldStatus === "NEW" ) {
+          requestMove.atout = this.props.atout
+          requestMove.cards_played = this.props.gameOrga.list_fold_cards
+          requestMove.remaining_cards = this.props.playerHand
+          requestMove.opening_color = null
+          this.props.getAiMove(requestMove)
+        } else {
+          requestMove.atout = this.props.atout
+          requestMove.cards_played = this.props.gameOrga.list_fold_cards
+          requestMove.remaining_cards = this.props.playerHand
+          requestMove.opening_color = this.props.gameOrga.list_fold_cards[0].card_name.slice(-1)
+          this.props.getAiMove(requestMove)
+        }
+      }
+    }, this.props.stopDelayMs)
 
-    }, this.props.stopDelayMs);
+    this.state.timer = setTimeout(() => {
+      NProgress.done();
+      NProgress.remove();
+      let requestMove = {}
+      if ( !this.props.isHuman ) {
+        console.log("ok")
+      }
+    }, this.props.stopDelayMs + 1000)
   };
 
   componentDidMount() {
@@ -49,15 +79,14 @@ class PlayStatusComp extends React.Component {
 }
 const mapStateToProps = (state) => {
     return {
-      handsdeal: state[c.NAME][c.API_KEY_GAME_HANDS],
-      playersStatus: state[c.NAME][c.GAMEPLAY][c.playersStatus],
-      playersBet: state[c.NAME][c.API_KEY_GAME_BETS],
-      gamePhase: state[c.NAME][c.GAMEPLAY]
+      gameOrga: state[c.NAME][c.GAME_CARDS][c.CARDS_ORGA]
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
+      addToFold: (card) => dispatch(a.addToFold(card)),
+      getAiMove: (params) => dispatch(a.getAiMove(params))
     }
 }
 

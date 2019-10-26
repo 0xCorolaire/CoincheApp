@@ -63,7 +63,7 @@ class GameComponent extends React.Component {
             {
               players.map(( p , id ) => {
                 let className = "hand-" + id
-                return (<PlayerHandContainer key={id} handNum={p.playerNum} team={p.team} userHand={p.isHuman} className={className} isBetting={p.isBetting} getBet={this.props.getBet} playersBet={this.props.playersBet} activeModal={this.props.modalActivation}/>)
+                return (<PlayerHandContainer key={id} handNum={p.playerNum} team={p.team} userHand={p.isHuman} className={className} isBetting={p.isBetting} isPlaying={p.isPlaying} getBet={this.props.getBet} playersBet={this.props.playersBet} activeModal={this.props.modalActivation}/>)
               })
             }
             <div className="fold">{this.props.gamePlay.status}</div>

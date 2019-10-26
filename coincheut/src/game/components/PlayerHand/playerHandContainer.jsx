@@ -4,7 +4,8 @@ import routing from "../../../utils/routing"
 import * as c from "../../gameConstants"
 import * as a from "../../gameActions"
 import * as f from "../../utils/functionsUtils"
-import BetStatus from '../progress/betStatus';
+import BetStatus from '../progress/betStatus'
+import PlayStatus from '../progress/playProgress'
 import { ShowAnnounce } from "./components"
 
 /**
@@ -14,6 +15,7 @@ import { ShowAnnounce } from "./components"
 * @property {number} team - if 1: horizontal, 2 : vertical
 * @property {string} className - if 1: horizontal, 2 : vertical
 * @property {booelan} isBetting - if true, set spinner and bet actions
+* @property {booelan} isPlaying - if true, set spinner and play actions
 * @property {function} getBet - getBet function passed threw props
 * @property {array} playersBet - array of bets
 */
@@ -109,7 +111,7 @@ class PlayerHandComponent extends React.Component {
         {this.props.isBetting && this.props.gamePhase === "BETTING" &&
           <div id="nprogressH">
             <BetStatus
-              stopDelayMs="4000"
+              stopDelayMs="3000"
               getBet={this.props.getBet}
               playerNum={this.props.handNum}
               playerHand={hand}
@@ -120,6 +122,20 @@ class PlayerHandComponent extends React.Component {
             />
           </div>
         }
+
+        {this.props.isPlaying && this.props.gamePhase === "PLAYING" &&
+          <div id="nprogressH">
+            <PlayStatus
+              stopDelayMs="3000"
+              atout={this.props.finalBet[0].type_bet.toLowerCase()}
+              playerHand={hand}
+              isHuman={userHand}
+              options={{target: '#nprogressH'}}
+            />
+          </div>
+        }
+
+
       </div>
     )
   }
@@ -128,7 +144,7 @@ class PlayerHandComponent extends React.Component {
 const mapStateToProps = (state) => {
     return {
       routing: state[routing.constants.NAME],
-      game: state[c.NAME],
+      finalBet: state[c.NAME][c.GAMEPLAY][c.finalBet],
       handsdeal: state[c.NAME][c.API_KEY_GAME_HANDS],
       playersStatus: state[c.NAME][c.GAMEPLAY][c.playersStatus],
       gamePhase: state[c.NAME][c.GAMEPLAY][c.STATUS],

@@ -3,7 +3,7 @@ import * as apiUtils from "../utils/apiUtils"
 import * as c from "./gameConstants"
 import * as f from "./utils/functionsUtils"
 
-
+//init store
 const initialState = {
     type:"",
     status: "NEW",
@@ -11,6 +11,21 @@ const initialState = {
     finalBet: null,
     isCoinched: false
 }
+
+const initialeScoreState = {
+  team1_score: 0,
+  team2_score: 0,
+  limit: 1500
+}
+
+const initialFoldState = {
+  list_cards: [],
+  list_fold_cards: [],
+  foldStatus: "NEW"
+}
+
+
+
 
 function GAMEPLAY(state = initialState, action) {
    switch ( action.type ) {
@@ -67,7 +82,8 @@ function GAMEPLAY(state = initialState, action) {
         if ( finalBet ) {
           let newPlayersStatus = []
           state.playersStatus.map((p,id) => {
-            p.isBetting = false
+            p.isBetting = false,
+            p.isPlaying = p.playerNum === 1 ? true : false,
             newPlayersStatus.push(p)
           })
           return {
@@ -86,11 +102,6 @@ function GAMEPLAY(state = initialState, action) {
    }
 }
 
-const initialeScoreState = {
-  team1_score: 0,
-  team2_score: 0,
-  limit: 1500
-}
 
 function SCORE(state = initialeScoreState, action) {
   switch ( action.type ) {
@@ -104,16 +115,42 @@ function SCORE(state = initialeScoreState, action) {
 }
 
 
-function GAME_CARDS(state = {}, action) {
+function CARDS_ORGA(state = initialFoldState, action) {
   switch ( action.type ) {
+    case c.ADD_TO_FOLD:
+      if ( state.status === "NEW" ) {
+        return {
+          ...state,
+          list_fold_cards: status.list_fold_cards.push(action.card),
+          foldStatus: "CURRENT"
+        }
+      }
+      return {
+        ...state,
+        list_fold_cards: state.list_fold_cards.push(action.card)
+      }
+
+    case c.STORE_FOLD_PILE:
+      return {
+        ...state,
+        statusFold: "NEW",
+        list_cards: list_cards.concat(state.list_fold_cards),
+        list_fold_cards: []
+      }
 
 
-
+    case c.INIT_FOLD:
+      return initialFoldState
 
     default:
       return state
   }
 }
+
+const GAME_CARDS = combineReducers({
+  CARDS_ORGA,
+  [c.GET_PLAYED_MOVE_KEY]: apiUtils.apiReducer(c.GET_PLAYED_MOVE_KEY,{data:{}})
+})
 
 
 const GAME_BETS = combineReducers({

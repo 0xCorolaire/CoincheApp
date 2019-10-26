@@ -7,7 +7,17 @@ import * as a from "../../gameActions"
 import * as f from "../../utils/functionsUtils"
 
 
-/* eslint-disable react/prefer-stateless-function */
+/**
+* @class BetStatus
+* @property {string/number} stopDelayMs
+* @property {function} getBet
+* @property {number} playerNum current player num
+* @property {array} playerHand current hand
+* @property {number} playerTeam team of the current player
+* @property {array} playersBet list of bets of players
+* @property {boolean} isHuman  if true, is a human
+* @property {object} options
+*/
 class BetStatusComp extends React.Component {
   constructor(props){
     super(props)

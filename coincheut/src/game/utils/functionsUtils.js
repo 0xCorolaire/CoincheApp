@@ -149,7 +149,8 @@ export function initPlayersRoles(){
         isHuman: true,
         team: 1,
         playerNum: 0,
-        isBetting: false
+        isBetting: false,
+        isPlaying: false
       }
     }else{
       if ( i === 2 ) {
@@ -158,7 +159,8 @@ export function initPlayersRoles(){
           isHuman: false,
           team: 1,
           playerNum: 0,
-          isBetting: false
+          isBetting: false,
+          isPlaying: false
         }
       }else{
         playersObj[i] = {
@@ -166,7 +168,8 @@ export function initPlayersRoles(){
           isHuman: false,
           team: 2,
           playerNum: 0,
-          isBetting: false
+          isBetting: false,
+          isPlaying: false
         }
       }
     }
